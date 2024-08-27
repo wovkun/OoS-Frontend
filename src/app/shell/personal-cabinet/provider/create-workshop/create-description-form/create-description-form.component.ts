@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { CropperConfigurationConstants } from 'shared/constants/constants';
+import { Direction } from '../../../../../shared/models/category.model';
 import { MUST_CONTAIN_LETTERS } from 'shared/constants/regex-constants';
 import { ValidationConstants } from 'shared/constants/validation';
 import { Provider } from 'shared/models/provider.model';
@@ -11,6 +12,7 @@ import { Workshop, WorkshopDescriptionItem } from 'shared/models/workshop.model'
 import { FormOfLearning } from 'shared/enum/workshop';
 import { FormOfLearningEnum } from 'shared/enum/enumUA/workshop';
 import { Util } from 'shared/utils/utils';
+import { TagService } from 'shared/services/workshops/tag-workshop/tag-workshop.service';
 
 @Component({
   selector: 'app-create-description-form',
@@ -49,14 +51,32 @@ export class CreateDescriptionFormComponent implements OnInit, OnDestroy {
 
   public keyWords: string[] = [];
   public keyWord: string;
+  public directions: Direction[] = [];
 
   public disabilityOptionRadioBtn: FormControl = new FormControl(false);
 
   public competitiveSelectionRadioBtn: FormControl = new FormControl(false);
   public separatorKeysCodes = [COMMA, ENTER];
+
+  public directionsControl: FormControl = new FormControl([]);
+
+  public compareItems(item1: Direction, item2: Direction): boolean {
+    return item1.id === item2.id;
+  }
+
+  public onRemoveItem(direction: Direction): void {
+    const index = this.directionsControl.value.indexOf(direction);
+    if (index >= 0) {
+      this.directionsControl.value.splice(index, 1);
+    }
+  }
+
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private tagService: TagService
+  ) {
     this.DescriptionFormGroup = this.formBuilder.group({
       imageFiles: new FormControl(''),
       imageIds: new FormControl(''),
@@ -79,6 +99,8 @@ export class CreateDescriptionFormComponent implements OnInit, OnDestroy {
     } else {
       this.onAddForm();
     }
+
+    this.directions = this.tagService.getDirections();
 
     this.passDescriptionFormGroup.emit(this.DescriptionFormGroup);
     this.keyWordsListener();
