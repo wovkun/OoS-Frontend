@@ -14,7 +14,6 @@ import { ShowMessageBar } from 'shared/store/app.actions';
 export class ImageCropperModalComponent {
   public croppedImage = '';
   public imageFile: Blob;
-  public invalidMinRequirements = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -33,11 +32,6 @@ export class ImageCropperModalComponent {
   public imageCropped(event: ImageCroppedEvent): void {
     this.croppedImage = event.objectUrl;
     this.imageFile = event.blob;
-  }
-
-  public imageLoaded(image: LoadedImage): void {
-    const { height, width } = image.original.size;
-    this.invalidMinRequirements = height < this.data.cropperConfig.cropperMinHeight || width < this.data.cropperConfig.cropperMinWidth;
   }
 
   public loadImageFailed(): void {
