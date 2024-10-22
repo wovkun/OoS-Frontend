@@ -61,7 +61,6 @@ export class ImageFormControlComponent implements OnInit, ImageFormControlCompon
   }
 
   public imageDecoder(file: Blob, onLoad: (ev: ProgressEvent<FileReader>) => void): void {
-    console.log(file);
     const myReader = new FileReader();
     myReader.onload = onLoad;
     return myReader.readAsDataURL(file);
