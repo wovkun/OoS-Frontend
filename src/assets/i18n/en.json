@@ -897,8 +897,5 @@
     "ERROR_404": "It looks like we can't find the page you're looking for. Error code: 404"
   },
   "MORE": "...More",
-  "LESS": "...Less",
-  "ALT": {
-    "IMAGE_WORKSHOP_PROVIDER": "Image of workshop or provider"
-  }
+  "LESS": "...Less"
 }

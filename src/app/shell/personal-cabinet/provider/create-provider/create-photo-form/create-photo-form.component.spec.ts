@@ -56,35 +56,6 @@ describe('CreatePhotoFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  describe('removeImageId', () => {
-    it('should remove the image ID from the imageIds control create-photo-form', () => {
-      const idToRemove = 'id2';
-
-      component.removeImageId(idToRemove);
-
-      expect(component.PhotoFormGroup.controls.imageIds.value).toEqual(['id1', 'id3']);
-    });
-
-    it('should not modify imageIds control if the ID is not found create-photo-form', () => {
-      const initialIds = component.PhotoFormGroup.controls.imageIds.value.slice();
-      const idToRemove = 'nonexistentId';
-
-      component.removeImageId(idToRemove);
-
-      expect(component.PhotoFormGroup.controls.imageIds.value).toEqual(initialIds);
-    });
-
-    it('should handle empty imageIds control create-photo-form', () => {
-      component.PhotoFormGroup.controls.imageIds.setValue([]);
-
-      const idToRemove = 'id2';
-
-      component.removeImageId(idToRemove);
-
-      expect(component.PhotoFormGroup.controls.imageIds.value).toEqual([]);
-    });
-  });
 });
 
 @Component({

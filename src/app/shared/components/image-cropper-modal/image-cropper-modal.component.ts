@@ -1,10 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { Store } from '@ngxs/store';
 
 import { Cropper } from 'shared/models/cropper';
-import { Store } from '@ngxs/store';
 import { ShowMessageBar } from 'shared/store/app.actions';
+import { SnackbarText } from 'shared/enum/enumUA/message-bar';
 
 @Component({
   selector: 'app-image-cropper-modal',
@@ -35,7 +36,7 @@ export class ImageCropperModalComponent {
   }
 
   public loadImageFailed(): void {
-    this.store.dispatch(new ShowMessageBar({ message: 'Failed to load image', type: 'error' }));
+    this.store.dispatch(new ShowMessageBar({ message: SnackbarText.errorToLoadImg, type: 'error' }));
   }
 
   public cropperReady(): void {}

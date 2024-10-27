@@ -163,18 +163,6 @@ describe('CreateInfoFormComponent', () => {
       };
     });
 
-    describe('removeCoverImageId', () => {
-      it('should set coverImageId control to null create-info-form', () => {
-        component.infoFormGroup.controls.coverImageId.setValue('someId');
-        expect(component.infoFormGroup.controls.coverImageId.value).toBe('someId');
-
-        const mockEvent = new Event('click');
-        component.removeCoverImageId(mockEvent);
-
-        expect(component.infoFormGroup.controls.coverImageId.value).toBeNull();
-      });
-    });
-
     it('should initialize institution statuses', () => {
       jest.spyOn(store, 'dispatch');
 

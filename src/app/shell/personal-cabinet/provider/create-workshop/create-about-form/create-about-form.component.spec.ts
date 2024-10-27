@@ -146,17 +146,6 @@ describe('CreateAboutFormComponent', () => {
       expect(component.AboutFormGroup.contains('competitiveSelectionDescription')).toBeFalsy();
     });
   });
-  describe('removeCoverImageId', () => {
-    it('should set coverImageId control to null create-about-form', () => {
-      component.AboutFormGroup.controls.coverImageId.setValue('someId');
-      expect(component.AboutFormGroup.controls.coverImageId.value).toBe('someId');
-
-      const mockEvent = new Event('click');
-      component.removeCoverImageId(mockEvent);
-
-      expect(component.AboutFormGroup.controls.coverImageId.value).toBeNull();
-    });
-  });
 });
 
 @Component({

@@ -1,12 +1,15 @@
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { NgxsModule, State, Store } from '@ngxs/store';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { Injectable } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+
 import { ShowMessageBar } from 'shared/store/app.actions';
 import { AppStateModel } from 'shared/store/app.state';
 import { SnackbarText } from 'shared/enum/enumUA/message-bar';
+import { SharedModule } from 'shared/shared.module';
 import { ImageFormControlComponent } from './image-form-control.component';
 
 describe('ImageFormControlComponent', () => {
@@ -20,7 +23,14 @@ describe('ImageFormControlComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MatIconModule, MatGridListModule, MatDialogModule, NgxsModule.forRoot([MockAppState])],
+      imports: [
+        MatIconModule,
+        MatGridListModule,
+        MatDialogModule,
+        NgxsModule.forRoot([MockAppState]),
+        SharedModule,
+        TranslateModule.forRoot()
+      ],
       declarations: [ImageFormControlComponent],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
@@ -70,16 +80,19 @@ describe('ImageFormControlComponent', () => {
     expect(activateEditModeSpy).toHaveBeenCalled();
   });
 
-  it('should remove the image and emit the removeId event', () => {
-    const mockDecodedImage = { image: 'image1.jpg', imgFile: new File([], 'image1.jpg') } as any;
+  it('should remove the image and update the imageIdsFormControl', () => {
+    const mockDecodedImage = { image: 'http://storage-url/image1.jpg', imgFile: new File([], 'image1.jpg') } as any;
     component.decodedImages = [mockDecodedImage];
     component.selectedImages = [mockDecodedImage.imgFile];
 
-    const removeIdSpy = jest.spyOn(component.removeId, 'emit');
+    component.imageIdsFormControl = {
+      value: ['image1.jpg'],
+      setValue: jest.fn()
+    } as any;
 
     component.onRemoveImg(mockDecodedImage);
 
-    expect(removeIdSpy).toHaveBeenCalledWith('image1.jpg');
+    expect(component.imageIdsFormControl.setValue).toHaveBeenCalledWith([]);
     expect(component.decodedImages.length).toBe(0);
     expect(component.selectedImages.length).toBe(0);
   });

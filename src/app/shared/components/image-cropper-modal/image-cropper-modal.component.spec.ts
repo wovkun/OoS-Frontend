@@ -1,9 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { ImageCroppedEvent, ImageCropperComponent, LoadedImage } from 'ngx-image-cropper';
-
+import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
 import { NgxsModule, Store } from '@ngxs/store';
+import { TranslateModule } from '@ngx-translate/core';
+
 import { ShowMessageBar } from 'shared/store/app.actions';
+import { SnackbarText } from 'shared/enum/enumUA/message-bar';
 import { Cropper } from '../../models/cropper';
 import { ImageCropperModalComponent } from './image-cropper-modal.component';
 
@@ -18,7 +20,7 @@ describe('ImageCropperModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MatDialogModule, NgxsModule.forRoot()],
+      imports: [MatDialogModule, NgxsModule.forRoot(), TranslateModule.forRoot()],
       declarations: [ImageCropperModalComponent],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: { image: testImage, cropperConfig: testCropperConfig } },
@@ -75,33 +77,9 @@ describe('ImageCropperModalComponent', () => {
     expect(component.imageFile).toEqual(mockEvent.blob);
   });
 
-  it('should set invalidMinRequirements to false if image meets the minimum size', () => {
-    const loadedImage: LoadedImage = {
-      original: {
-        size: { width: 150, height: 150 }
-      }
-    } as LoadedImage;
-
-    component.imageLoaded(loadedImage);
-
-    expect(component.invalidMinRequirements).toBeFalsy();
-  });
-
-  it('should set invalidMinRequirements to true if image is smaller than minimum size', () => {
-    const loadedImage: LoadedImage = {
-      original: {
-        size: { width: 50, height: 50 }
-      }
-    } as LoadedImage;
-
-    component.imageLoaded(loadedImage);
-
-    expect(component.invalidMinRequirements).toBeTruthy();
-  });
-
   it('should dispatch ShowMessageBar action with error message when loadImageFailed is called', () => {
     component.loadImageFailed();
 
-    expect(store.dispatch).toHaveBeenCalledWith(new ShowMessageBar({ message: 'Failed to load image', type: 'error' }));
+    expect(store.dispatch).toHaveBeenCalledWith(new ShowMessageBar({ message: SnackbarText.errorToLoadImg, type: 'error' }));
   });
 });
