@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngxs/store';
 
@@ -12,7 +12,6 @@ import { environment } from '../../../../environments/environment';
 import { ImageCropperModalComponent } from '../image-cropper-modal/image-cropper-modal.component';
 
 type FilesToVoid = (array: File[]) => void;
-type VoidToVoid = () => void;
 
 @Component({
   selector: 'app-image-form-control',
@@ -26,31 +25,25 @@ type VoidToVoid = () => void;
     }
   ]
 })
-export class ImageFormControlComponent implements OnInit, ImageFormControlComponent, ControlValueAccessor {
+export class ImageFormControlComponent implements OnInit, ControlValueAccessor {
   @Input() public imgMaxAmount: number;
   @Input() public imageIdsFormControl: AbstractControl;
   @Input() public label: string;
-  @Input() public cropperConfig: Partial<Cropper>; // FIXME: Remove Partial type and fix the errors those are related with this Input
+  @Input() public cropperConfig: Partial<Cropper>;
 
   @ViewChild('inputImage') public inputImage: ElementRef;
 
-  public photoFormGroup: FormGroup;
   public gridCols: number;
   public mediumScreen = 500;
   public smallScreen = 366;
   public selectedImages: File[] = [];
   public decodedImages: DecodedImage[] = [];
-  public touched = false;
-  public disabled = false;
 
   constructor(
     public dialog: MatDialog,
     private changeDetection: ChangeDetectorRef,
     private store: Store
   ) {}
-
-  public onChange: FilesToVoid = () => {};
-  public onTouched: VoidToVoid = () => {};
 
   public ngOnInit(): void {
     this.onResize(window);
@@ -59,48 +52,49 @@ export class ImageFormControlComponent implements OnInit, ImageFormControlCompon
     }
   }
 
-  public imageDecoder(file: Blob, onLoad: (ev: ProgressEvent<FileReader>) => void): void {
-    const myReader = new FileReader();
-    myReader.onload = onLoad;
-    return myReader.readAsDataURL(file);
+  public writeValue(images: File[]): void {
+    if (images) {
+      this.selectedImages = images;
+      this.changeDetection.markForCheck();
+    }
+  }
+
+  public registerOnChange(fn: FilesToVoid): void {
+    this.onChange = fn;
+  }
+
+  public registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
   }
 
   public onRemoveImg(img: DecodedImage): void {
-    this.markAsTouched();
-    if (!this.disabled) {
-      const imageIndex: number = this.decodedImages.indexOf(img);
-      if (imageIndex >= 0) {
-        this.updateImageList(imageIndex, img);
+    const imageIndex = this.decodedImages.indexOf(img);
+    if (imageIndex >= 0) {
+      const imageIdToRemove: string = this.decodedImages[imageIndex].image.split('/').at(-1);
+
+      this.decodedImages.splice(imageIndex, 1);
+      if (img.imgFile) {
+        this.selectedImages.splice(this.selectedImages.indexOf(img.imgFile), 1);
       }
+
+      this.onChange(this.selectedImages);
+      this.updateImageIdsFormControl(imageIdToRemove);
+      this.markAsTouched();
     }
   }
 
   public activateEditMode(): void {
-    this.imageIdsFormControl.value.forEach((imageId) => {
-      this.decodedImages.push(new DecodedImage(environment.storageUrl + imageId, null));
-    });
-  }
-
-  public registerOnChange(onChange: FilesToVoid): void {
-    this.onChange = onChange;
-  }
-
-  public registerOnTouched(onTouched: VoidToVoid): void {
-    this.onTouched = onTouched;
-  }
-
-  public markAsTouched(): void {
-    if (!this.touched) {
-      this.onTouched();
-      this.touched = true;
+    if (this.imageIdsFormControl?.value?.length) {
+      this.imageIdsFormControl.value.forEach((imageId) => {
+        this.decodedImages.push(new DecodedImage(environment.storageUrl + imageId, null));
+      });
     }
   }
 
-  public setDisabledState(disabled: boolean): void {
-    this.disabled = disabled;
+  public markAsTouched(): void {
+    this.onTouched();
   }
 
-  /* This method controls cols quantity in the img preview grid rows depending on screen width */
   public onResize(screen: Window): void {
     if (screen.innerWidth >= this.mediumScreen) {
       this.gridCols = 4;
@@ -113,30 +107,21 @@ export class ImageFormControlComponent implements OnInit, ImageFormControlCompon
 
   public fileChangeEvent(event: Event): void {
     const target = event.target as HTMLInputElement;
-    this.imageDecoder(target.files[0], (ev: ProgressEvent<FileReader>) => {
-      const img = new Image();
-      img.src = ev.target.result as string;
-      img.onload = (): void => {
-        const config = this.cropperConfig;
-        if (img.width < config.cropperMinWidth || img.height < config.cropperMinHeight) {
-          return this.handleImageError(SnackbarText.errorForSmallImg);
-        }
-        if (img.width > config.cropperMaxWidth || img.height > config.cropperMaxHeight) {
-          return this.handleImageError(SnackbarText.errorForBigImg);
-        }
-        this.openCropperModal(event);
-      };
-    });
-  }
-
-  public writeValue(value: DecodedImage[]): void {
-    if (value) {
-      this.decodedImages = value;
-      this.selectedImages = value.map((img: DecodedImage) => img.imgFile);
-      this.changeDetection.markForCheck();
-    } else {
-      this.decodedImages = [];
-      this.selectedImages = [];
+    if (target.files && target.files[0]) {
+      this.imageDecoder(target.files[0], (ev: ProgressEvent<FileReader>) => {
+        const img = new Image();
+        img.src = ev.target.result as string;
+        img.onload = (): void => {
+          const config = this.cropperConfig;
+          if (img.width < config.cropperMinWidth || img.height < config.cropperMinHeight) {
+            return this.handleImageError(SnackbarText.errorForSmallImg);
+          }
+          if (img.width > config.cropperMaxWidth || img.height > config.cropperMaxHeight) {
+            return this.handleImageError(SnackbarText.errorForBigImg);
+          }
+          this.openCropperModal(event);
+        };
+      });
     }
   }
 
@@ -165,6 +150,12 @@ export class ImageFormControlComponent implements OnInit, ImageFormControlCompon
     });
   }
 
+  public imageDecoder(file: Blob, onLoad: (ev: ProgressEvent<FileReader>) => void): void {
+    const myReader = new FileReader();
+    myReader.onload = onLoad;
+    myReader.readAsDataURL(file);
+  }
+
   private updateImageIdsFormControl(imageId: string): void {
     const imgIds = [...this.imageIdsFormControl.value];
     const imgIndex: number = imgIds.indexOf(imageId);
@@ -173,18 +164,6 @@ export class ImageFormControlComponent implements OnInit, ImageFormControlCompon
       imgIds.splice(imgIndex, 1);
       this.imageIdsFormControl.setValue(imgIds);
     }
-  }
-
-  private updateImageList(imageIndex: number, img: DecodedImage): void {
-    const imageIdToRemove: string = this.decodedImages[imageIndex].image.split('/').at(-1);
-    this.decodedImages.splice(imageIndex, 1);
-
-    if (img.imgFile) {
-      this.selectedImages.splice(this.selectedImages.indexOf(img.imgFile), 1);
-    }
-
-    this.onChange(this.selectedImages);
-    this.updateImageIdsFormControl(imageIdToRemove);
   }
 
   private handleImageError(message: string): void {
@@ -196,4 +175,7 @@ export class ImageFormControlComponent implements OnInit, ImageFormControlCompon
     );
     this.inputImage.nativeElement.value = '';
   }
+
+  private onChange: FilesToVoid = () => {};
+  private onTouched: () => void = () => {};
 }
