@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ImgPath } from 'shared/models/carousel.model';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+
+import { ImgPath } from 'shared/models/carousel.model';
 
 @Component({
   selector: 'app-image-carousel',
