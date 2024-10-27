@@ -129,7 +129,16 @@ export class ImageFormControlComponent implements OnInit, ImageFormControlCompon
     });
   }
 
-  public writeValue(_obj: unknown): void {}
+  public writeValue(value: DecodedImage[]): void {
+    if (value) {
+      this.decodedImages = value;
+      this.selectedImages = value.map((img: DecodedImage) => img.imgFile);
+      this.changeDetection.markForCheck();
+    } else {
+      this.decodedImages = [];
+      this.selectedImages = [];
+    }
+  }
 
   public openCropperModal(event: Event): void {
     const dialogRef = this.dialog.open(ImageCropperModalComponent, {
