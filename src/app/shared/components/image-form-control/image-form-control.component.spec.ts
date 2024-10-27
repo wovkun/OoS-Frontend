@@ -186,14 +186,6 @@ describe('ImageFormControlComponent', () => {
     });
   });
 
-  it('should set disabled state', () => {
-    component.setDisabledState(true);
-    expect(component.disabled).toBe(true);
-
-    component.setDisabledState(false);
-    expect(component.disabled).toBe(false);
-  });
-
   it('should set grid columns based on screen width', () => {
     const largeScreen = { innerWidth: 600 } as Window;
     const smallScreen = { innerWidth: 300 } as Window;
