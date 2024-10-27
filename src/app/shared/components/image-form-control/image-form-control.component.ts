@@ -125,24 +125,12 @@ export class ImageFormControlComponent implements OnInit, ImageFormControlCompon
       img.onload = (): void => {
         const config = this.cropperConfig;
         if (img.width < config.cropperMinWidth || img.height < config.cropperMinHeight) {
-          this.store.dispatch(
-            new ShowMessageBar({
-              message: SnackbarText.errorForSmallImg,
-              type: 'error'
-            })
-          );
-          this.inputImage.nativeElement.value = '';
-        } else if (img.width > config.cropperMaxWidth || img.height > config.cropperMaxHeight) {
-          this.store.dispatch(
-            new ShowMessageBar({
-              message: SnackbarText.errorForBigImg,
-              type: 'error'
-            })
-          );
-          this.inputImage.nativeElement.value = '';
-        } else {
-          this.openCropperModal(event);
+          return this.handleImageError(SnackbarText.errorForSmallImg);
         }
+        if (img.width > config.cropperMaxWidth || img.height > config.cropperMaxHeight) {
+          return this.handleImageError(SnackbarText.errorForBigImg);
+        }
+        this.openCropperModal(event);
       };
     });
   }
@@ -165,12 +153,22 @@ export class ImageFormControlComponent implements OnInit, ImageFormControlCompon
       if (image) {
         this.imageDecoder(image, (ev: ProgressEvent<FileReader>) => {
           this.decodedImages.push(new DecodedImage(ev.target.result as string, image));
-          this.changeDetection.detectChanges();
+          this.changeDetection.markForCheck();
         });
         this.selectedImages.push(image);
         this.onChange(this.selectedImages);
       }
       this.inputImage.nativeElement.value = '';
     });
+  }
+
+  private handleImageError(message: string): void {
+    this.store.dispatch(
+      new ShowMessageBar({
+        message: message,
+        type: 'error'
+      })
+    );
+    this.inputImage.nativeElement.value = '';
   }
 }
