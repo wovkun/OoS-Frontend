@@ -31,7 +31,6 @@ export class ImageFormControlComponent implements OnInit, ImageFormControlCompon
   @Input() public imageIdsFormControl: AbstractControl;
   @Input() public label: string;
   @Input() public cropperConfig: Partial<Cropper>; // FIXME: Remove Partial type and fix the errors those are related with this Input
-  @Output() public removeId = new EventEmitter();
 
   @ViewChild('inputImage') public inputImage: ElementRef;
 
@@ -69,14 +68,9 @@ export class ImageFormControlComponent implements OnInit, ImageFormControlCompon
   public onRemoveImg(img: DecodedImage): void {
     this.markAsTouched();
     if (!this.disabled) {
-      if (this.decodedImages.indexOf(img) >= 0) {
-        const imageIndex = this.decodedImages.indexOf(img);
-        this.removeId.emit(this.decodedImages[imageIndex].image.split('/').at(-1));
-        this.decodedImages.splice(imageIndex, 1);
-        if (img.imgFile) {
-          this.selectedImages.splice(this.selectedImages.indexOf(img.imgFile), 1);
-        }
-        this.onChange(this.selectedImages);
+      const imageIndex: number = this.decodedImages.indexOf(img);
+      if (imageIndex >= 0) {
+        this.updateImageList(imageIndex, img);
       }
     }
   }
@@ -160,6 +154,28 @@ export class ImageFormControlComponent implements OnInit, ImageFormControlCompon
       }
       this.inputImage.nativeElement.value = '';
     });
+  }
+
+  private updateImageIdsFormControl(imageId: string): void {
+    const imgIds = [...this.imageIdsFormControl.value];
+    const imgIndex: number = imgIds.indexOf(imageId);
+
+    if (imgIndex !== -1) {
+      imgIds.splice(imgIndex, 1);
+      this.imageIdsFormControl.setValue(imgIds);
+    }
+  }
+
+  private updateImageList(imageIndex: number, img: DecodedImage): void {
+    const imageIdToRemove: string = this.decodedImages[imageIndex].image.split('/').at(-1);
+    this.decodedImages.splice(imageIndex, 1);
+
+    if (img.imgFile) {
+      this.selectedImages.splice(this.selectedImages.indexOf(img.imgFile), 1);
+    }
+
+    this.onChange(this.selectedImages);
+    this.updateImageIdsFormControl(imageIdToRemove);
   }
 
   private handleImageError(message: string): void {

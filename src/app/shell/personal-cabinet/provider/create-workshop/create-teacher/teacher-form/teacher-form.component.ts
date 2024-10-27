@@ -48,8 +48,4 @@ export class TeacherFormComponent {
       this.TeacherFormGroup.get(formControlName).setValue(null);
     }
   }
-
-  public removeCoverImageId($event: Event): void {
-    this.TeacherFormGroup.get('coverImageId').setValue(null);
-  }
 }
