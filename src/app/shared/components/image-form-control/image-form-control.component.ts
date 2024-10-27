@@ -41,8 +41,8 @@ export class ImageFormControlComponent implements OnInit, ControlValueAccessor {
 
   constructor(
     public dialog: MatDialog,
-    private changeDetection: ChangeDetectorRef,
-    private store: Store
+    private readonly changeDetection: ChangeDetectorRef,
+    private readonly store: Store
   ) {}
 
   public ngOnInit(): void {
@@ -107,7 +107,7 @@ export class ImageFormControlComponent implements OnInit, ControlValueAccessor {
 
   public fileChangeEvent(event: Event): void {
     const target = event.target as HTMLInputElement;
-    if (target.files && target.files[0]) {
+    if (target.files?.[0]) {
       this.imageDecoder(target.files[0], (ev: ProgressEvent<FileReader>) => {
         const img = new Image();
         img.src = ev.target.result as string;

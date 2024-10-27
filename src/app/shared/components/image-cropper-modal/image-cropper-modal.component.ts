@@ -23,7 +23,7 @@ export class ImageCropperModalComponent {
       cropperConfig: Cropper;
     },
     public dialogRef: MatDialogRef<ImageCropperModalComponent>,
-    private store: Store
+    private readonly store: Store
   ) {}
 
   public onConfirm(): void {
