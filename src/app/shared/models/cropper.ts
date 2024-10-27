@@ -1,7 +1,9 @@
+import { imgFormat } from 'shared/enum/cropper';
+
 export interface Cropper {
   croppedWidth: number;
   croppedHeight?: number;
-  croppedFormat: 'png' | 'jpeg';
+  croppedFormat: imgFormat.png | imgFormat.jpeg;
   cropperMinWidth: number;
   cropperMaxWidth: number;
   cropperMinHeight?: number;
