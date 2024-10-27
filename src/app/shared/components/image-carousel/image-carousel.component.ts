@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 
 import { ImgPath } from 'shared/models/carousel.model';
+import { DEFAULT_CAROUSEL_OPTIONS } from 'shared/configs/carousel.config';
 
 @Component({
   selector: 'app-image-carousel',
@@ -11,18 +12,7 @@ import { ImgPath } from 'shared/models/carousel.model';
 export class ImageCarouselComponent implements OnInit {
   @Input() public images: ImgPath[] = [];
 
-  protected customOptions: OwlOptions = {
-    loop: true,
-    autoplay: true,
-    dots: true,
-    nav: true,
-    navText: ['<span class="material-icons">arrow_back_ios</span>', '<span class="material-icons">arrow_forward_ios</span>'],
-    responsive: {
-      0: {
-        items: 1
-      }
-    }
-  };
+  protected customOptions: OwlOptions = { ...DEFAULT_CAROUSEL_OPTIONS };
 
   public ngOnInit(): void {
     if (this.images.length <= 1) {
