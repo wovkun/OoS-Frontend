@@ -12,7 +12,7 @@ import { ApplicationEntityType, ApplicationShowParams } from 'shared/enum/applic
 import { WorkshopDeclination } from 'shared/enum/enumUA/declinations/declination';
 import { NavBarName } from 'shared/enum/enumUA/navigation-bar';
 import { ModalConfirmationType } from 'shared/enum/modal-confirmation';
-import { Subrole } from 'shared/enum/role';
+import { Role } from 'shared/enum/role';
 import { ApplicationStatuses } from 'shared/enum/statuses';
 import { Application, ApplicationFilterParameters, ApplicationUpdate } from 'shared/models/application.model';
 import { BlockedParent } from 'shared/models/block.model';
@@ -150,13 +150,13 @@ export class ProviderApplicationsComponent extends CabinetDataComponent implemen
   protected init(): void {
     this.provider$.pipe(filter(Boolean), takeUntil(this.destroy$)).subscribe((provider: Provider) => {
       this.provider = provider;
-      switch (this.subrole) {
-        case Subrole.None:
+      switch (this.role) {
+        case Role.provider:
           this.applicationParams.property = ApplicationEntityType.provider;
           this.providerId = provider.id;
           break;
-        case Subrole.ProviderDeputy:
-        case Subrole.ProviderAdmin:
+        case Role.providerDeputy:
+        case Role.providerAdmin:
           this.applicationParams.property = ApplicationEntityType.ProviderAdmin;
           this.providerId = this.store.selectSnapshot(RegistrationState.user).id;
           break;
@@ -181,12 +181,12 @@ export class ProviderApplicationsComponent extends CabinetDataComponent implemen
   }
 
   private getProviderWorkshops(): void {
-    switch (this.subrole) {
-      case Subrole.None:
+    switch (this.role) {
+      case Role.provider:
         this.store.dispatch(new GetWorkshopListByProviderId(this.providerId));
         break;
-      case Subrole.ProviderDeputy:
-      case Subrole.ProviderAdmin:
+      case Role.providerDeputy:
+      case Role.providerAdmin:
         this.store.dispatch(new GetWorkshopListByProviderAdminId(this.providerId));
         break;
     }

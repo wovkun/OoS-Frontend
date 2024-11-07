@@ -2,11 +2,9 @@ import { KeyValue } from '@angular/common';
 
 import { CodeMessageErrors } from 'shared/enum/enumUA/errors';
 import { Localization } from 'shared/enum/enumUA/localization';
-import { PersonalCabinetTitle } from 'shared/enum/enumUA/navigation-bar';
 import { ProviderAdminTitles } from 'shared/enum/enumUA/provider-admin';
 import { UserTabsTitles } from 'shared/enum/enumUA/user';
 import { NotificationDescriptionType, NotificationType } from 'shared/enum/notifications';
-import { Role, Subrole } from 'shared/enum/role';
 import { EmailConfirmationStatuses, UserStatuses } from 'shared/enum/statuses';
 import { BaseAdmin } from 'shared/models/admin.model';
 import { AreaAdmin } from 'shared/models/area-admin.model';
@@ -208,10 +206,6 @@ export class Util {
     finalMessage.message = messageArr.join(';\n');
 
     return finalMessage;
-  }
-
-  public static getPersonalCabinetTitle(userRole: Role, subrole: Subrole): PersonalCabinetTitle {
-    return userRole !== Role.provider ? PersonalCabinetTitle[userRole] : PersonalCabinetTitle[subrole];
   }
 
   public static getFullName(person: Person): string {

@@ -52,7 +52,7 @@
             }}</a>
             <a [routerLink]="'./personal-cabinet/messages'" (click)="changeView()">{{ 'ENUM.NAV_BAR_NAME.MESSAGES' | translate }}</a>
             <a
-              *ngIf="user.role === Role.provider && (subrole$ | async) !== Role.ProviderAdmin"
+              *ngIf="user.role === Role.provider && user.role === Role.providerDeputy"
               [routerLink]="'./personal-cabinet/provider/administration'"
               (click)="changeView()"
               >{{ 'ENUM.NAV_BAR_NAME.ADMINISTRATION' | translate }}</a

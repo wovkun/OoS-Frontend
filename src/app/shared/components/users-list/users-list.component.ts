@@ -41,7 +41,6 @@ export class UsersListComponent implements OnInit, AfterViewInit, OnChanges {
   public readonly tooltipPosition = Constants.MAT_TOOL_TIP_POSITION_BELOW;
   public readonly Role = Role;
 
-  public subrole: string;
   public dataSource: MatTableDataSource<object> = new MatTableDataSource([{}]);
 
   constructor(
@@ -50,7 +49,6 @@ export class UsersListComponent implements OnInit, AfterViewInit, OnChanges {
   ) {}
 
   public ngOnInit(): void {
-    this.subrole = this.store.selectSnapshot<string>(RegistrationState.subrole);
     this.dataSource = new MatTableDataSource(this.users);
   }
 

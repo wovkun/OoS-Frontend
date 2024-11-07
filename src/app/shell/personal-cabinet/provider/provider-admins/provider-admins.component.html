@@ -13,10 +13,10 @@
         [matTooltipDisabled]="!isSmallMobileView" />
     </div>
 
-    <ng-container *ngIf="subrole === Subrole.None; then ProviderViewBtnTmpl; else DeputyBtnViewTmpl"></ng-container>
+    <ng-container *ngIf="role === Role.provider; then ProviderViewBtnTmpl; else DeputyBtnViewTmpl"></ng-container>
   </div>
   <div class="tab-wrapper">
-    <ng-container *ngIf="subrole === Subrole.None; then ProviderTableViewTmpl; else DeputyTableViewTmpl"></ng-container>
+    <ng-container *ngIf="role === Role.provider; then ProviderTableViewTmpl; else DeputyTableViewTmpl"></ng-container>
   </div>
 </div>
 

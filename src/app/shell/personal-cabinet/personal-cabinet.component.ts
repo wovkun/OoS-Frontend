@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { PersonalCabinetTitle } from 'shared/enum/enumUA/navigation-bar';
 import { RoleLinks } from 'shared/enum/enumUA/user';
-import { Role, Subrole } from 'shared/enum/role';
+import { Role } from 'shared/enum/role';
 import { ApplicationStatuses } from 'shared/enum/statuses';
 import { Application } from 'shared/models/application.model';
 import { SearchResponse } from 'shared/models/search.model';
@@ -15,7 +15,6 @@ import { GetPendingApplicationsByProviderId } from 'shared/store/provider.action
 import { ProviderState } from 'shared/store/provider.state';
 import { RegistrationState } from 'shared/store/registration.state';
 import { isRoleAdmin } from 'shared/utils/admin.utils';
-import { Util } from 'shared/utils/utils';
 
 @Component({
   selector: 'app-personal-cabinet',
@@ -31,12 +30,10 @@ export class PersonalCabinetComponent implements OnInit, OnDestroy {
   public readonly ApplicationStatuses = ApplicationStatuses;
   public readonly RoleLinks = RoleLinks;
   public readonly Role = Role;
-  public readonly Subrole = Subrole;
   public readonly isRoleAdmin = isRoleAdmin;
 
   public personalCabinetTitle: PersonalCabinetTitle;
   public userRole: Role;
-  public subrole: Subrole;
 
   constructor(
     private store: Store,
@@ -45,8 +42,7 @@ export class PersonalCabinetComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.userRole = this.store.selectSnapshot<Role>(RegistrationState.role);
-    this.subrole = this.store.selectSnapshot<Subrole>(RegistrationState.subrole);
-    this.personalCabinetTitle = Util.getPersonalCabinetTitle(this.userRole, this.subrole);
+    this.personalCabinetTitle = PersonalCabinetTitle[this.userRole];
 
     this.store.dispatch(
       new AddNavPath(

@@ -4,20 +4,18 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { LoginResponse, OidcSecurityService } from 'angular-auth-oidc-client';
-import { jwtDecode } from 'jwt-decode';
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 
 import { ModeConstants } from 'shared/constants/constants';
 import { SnackbarText } from 'shared/enum/enumUA/message-bar';
-import { Role, Subrole } from 'shared/enum/role';
+import { Role } from 'shared/enum/role';
 import { AreaAdmin } from 'shared/models/area-admin.model';
 import { MinistryAdmin } from 'shared/models/ministry-admin.model';
 import { Parent } from 'shared/models/parent.model';
 import { Provider } from 'shared/models/provider.model';
 import { RegionAdmin } from 'shared/models/region-admin.model';
 import { TechAdmin } from 'shared/models/tech-admin.model';
-import { TokenPayload } from 'shared/models/token-payload.model';
 import { User } from 'shared/models/user.model';
 import { AreaAdminService } from 'shared/services/area-admin/area-admin.service';
 import { MinistryAdminService } from 'shared/services/ministry-admin/ministry-admin.service';
@@ -51,7 +49,6 @@ export interface RegistrationStateModel {
   regionAdmin: RegionAdmin;
   areaAdmin: AreaAdmin;
   role: Role;
-  subrole: Subrole;
 }
 
 @State<RegistrationStateModel>({
@@ -67,8 +64,7 @@ export interface RegistrationStateModel {
     regionAdmin: undefined,
     ministryAdmin: undefined,
     areaAdmin: undefined,
-    role: Role.unauthorized,
-    subrole: null
+    role: Role.unauthorized
   }
 })
 @Injectable()
@@ -125,11 +121,6 @@ export class RegistrationState {
     return state.role;
   }
 
-  @Selector()
-  static subrole(state: RegistrationStateModel): Subrole | undefined {
-    return state.subrole;
-  }
-
   @Action(Login)
   login(_ctx: StateContext<RegistrationStateModel>, { payload }: Login): void {
     const configIdOrNull = null;
@@ -153,15 +144,7 @@ export class RegistrationState {
       switchMap((auth: LoginResponse) => {
         patchState({ isAuthorized: auth.isAuthenticated });
         if (auth.isAuthenticated) {
-          return this.oidcSecurityService.getAccessToken().pipe(
-            switchMap((value: string) => {
-              const token: TokenPayload = jwtDecode(value);
-              const role = token.role;
-              const subrole = token.subrole;
-              patchState({ subrole, role });
-              return dispatch(new GetUserPersonalInfo()).pipe(switchMap(() => dispatch(new CheckRegistration())));
-            })
-          );
+          return dispatch(new GetUserPersonalInfo()).pipe(switchMap(() => dispatch(new CheckRegistration())));
         } else {
           patchState({ role: Role.unauthorized, isAuthorizationLoading: false });
           return of(null);
@@ -221,7 +204,11 @@ export class RegistrationState {
   @Action(GetUserPersonalInfo)
   getUserPersonalInfo({ patchState }: StateContext<RegistrationStateModel>): Observable<User> {
     patchState({ isLoading: true });
-    return this.userService.getPersonalInfo().pipe(tap((user: User) => patchState({ user: user, isLoading: false })));
+    return this.userService.getPersonalInfo().pipe(
+      tap((user: User) => {
+        patchState({ user, role: user.role as Role, isLoading: false });
+      })
+    );
   }
 
   @Action(UpdateUser)

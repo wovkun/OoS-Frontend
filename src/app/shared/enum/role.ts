@@ -2,17 +2,13 @@ export enum Role {
   all = 'all',
   unauthorized = 'unauthorized',
   provider = 'provider',
+  providerAdmin = 'provideradmin',
+  providerDeputy = 'providerdeputy',
   parent = 'parent',
   techAdmin = 'techadmin',
   ministryAdmin = 'ministryadmin',
   regionAdmin = 'regionadmin',
   areaAdmin = 'areaadmin'
-}
-
-export enum Subrole {
-  None = 'None',
-  ProviderDeputy = 'ProviderDeputy',
-  ProviderAdmin = 'ProviderAdmin'
 }
 
 export enum EntityType {

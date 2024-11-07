@@ -11,11 +11,11 @@ import { Constants } from 'shared/constants/constants';
 import { NAME_REGEX } from 'shared/constants/regex-constants';
 import { FormValidators, ValidationConstants } from 'shared/constants/validation';
 import { WorkshopDeclination } from 'shared/enum/enumUA/declinations/declination';
-import { NavBarName } from 'shared/enum/enumUA/navigation-bar';
+import { NavBarName, PersonalCabinetTitle } from 'shared/enum/enumUA/navigation-bar';
 import { ProviderAdminsFormTitlesEdit, ProviderAdminsFormTitlesNew } from 'shared/enum/enumUA/provider-admin';
 import { ModalConfirmationType } from 'shared/enum/modal-confirmation';
 import { ProviderAdminRole } from 'shared/enum/provider-admin';
-import { Role, Subrole } from 'shared/enum/role';
+import { Role } from 'shared/enum/role';
 import { TruncatedItem } from 'shared/models/item.model';
 import { ProviderAdmin } from 'shared/models/provider-admin.model';
 import { Provider } from 'shared/models/provider.model';
@@ -131,8 +131,7 @@ export class CreateProviderAdminComponent extends CreateFormComponent implements
 
   public addNavPath(): void {
     const userRole = this.store.selectSnapshot<Role>(RegistrationState.role);
-    const subrole = this.store.selectSnapshot<Subrole>(RegistrationState.subrole);
-    const personalCabinetTitle = Util.getPersonalCabinetTitle(userRole, subrole);
+    const personalCabinetTitle = PersonalCabinetTitle[userRole];
     let navBarTitle: string;
 
     if (this.editMode) {

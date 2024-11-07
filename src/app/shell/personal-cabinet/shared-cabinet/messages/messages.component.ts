@@ -11,7 +11,7 @@ import { WorkshopDeclination } from 'shared/enum/enumUA/declinations/declination
 import { NavBarName } from 'shared/enum/enumUA/navigation-bar';
 import { NoResultsTitle } from 'shared/enum/enumUA/no-results';
 import { ModalConfirmationType } from 'shared/enum/modal-confirmation';
-import { Role, Subrole } from 'shared/enum/role';
+import { Role } from 'shared/enum/role';
 import { BlockedParent } from 'shared/models/block.model';
 import { ChatRoom, ChatRoomsParameters } from 'shared/models/chat.model';
 import { TruncatedItem } from 'shared/models/item.model';
@@ -62,7 +62,7 @@ export class MessagesComponent extends CabinetDataComponent {
   }
 
   public getProviderWorkshops(): void {
-    if (this.subrole === Subrole.None) {
+    if (this.role === Role.provider) {
       this.store.dispatch(new GetWorkshopListByProviderId(this.providerId));
     }
   }

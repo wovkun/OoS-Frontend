@@ -17,7 +17,7 @@ import { ConfirmationModalWindowComponent } from 'shared/components/confirmation
 import { NoResultCardComponent } from 'shared/components/no-result-card/no-result-card.component';
 import { Constants } from 'shared/constants/constants';
 import { ModalConfirmationType } from 'shared/enum/modal-confirmation';
-import { Role, Subrole } from 'shared/enum/role';
+import { Role } from 'shared/enum/role';
 import { ProviderAdminParameters } from 'shared/models/provider-admin.model';
 import { Provider } from 'shared/models/provider.model';
 import { ProviderAdminsBlockData, ProviderAdminsTableData } from 'shared/models/users-table';
@@ -55,7 +55,6 @@ describe('ProviderAdminsComponent', () => {
     store = TestBed.inject(Store);
     fixture.detectChanges();
     component.role = Role.provider;
-    component.subrole = Subrole.None;
   });
 
   it('should create', () => {
