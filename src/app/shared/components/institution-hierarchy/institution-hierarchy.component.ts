@@ -27,6 +27,7 @@ export class InstitutionHierarchyComponent implements OnInit, OnDestroy {
   @Input() public instituitionHierarchyIdFormControl: AbstractControl;
   @Input() public provider: Provider;
   @Input() public instituitionIdFormControl: AbstractControl;
+  public hierarchyArray: HierarchyElement[] = [];
 
   @Select(MetaDataState.institutions)
   public institutions$: Observable<Institution[]>;
@@ -41,7 +42,6 @@ export class InstitutionHierarchyComponent implements OnInit, OnDestroy {
   private institutionFieldDesc: InstitutionFieldDescription[];
   private readonly destroy$: Subject<boolean> = new Subject<boolean>();
   private isEditMode: boolean;
-  public hierarchyArray: HierarchyElement[] = [];
 
   constructor(
     private readonly store: Store,
