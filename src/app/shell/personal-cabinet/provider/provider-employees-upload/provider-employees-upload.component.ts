@@ -30,7 +30,7 @@ export class ProviderEmployeesUploadComponent extends UploadExcelComponent<Emplo
     },
     {
       fieldName: 'employeeRNOKPP',
-      validationParam: { checkEmpty: true, checkRNOKPP: true }
+      validationParam: { checkEmpty: true }
     },
     {
       fieldName: 'employeeAssignedRole',

@@ -1,11 +1,11 @@
 @import 'src/app/shared/styles/buttons.scss';
 
-$duplicatedValue: #fd0707b3;
-$emptyField: #fd07071a;
-$wrongLength: #0d138980;
-$wrongLanguage: #22b01280;
-$wrongFormat: #ffff0080;
-$lengthWarningMessage: #ff0000;
+$duplicated-value: #fd0707b3;
+$empty-field: #fd07071a;
+$wrong-length: #0d138980;
+$wrong-language: #22b01280;
+$wrong-format: #ffff0080;
+$length-warning-message: #ff0000;
 
 .import-buttons {
   display: flex;
@@ -42,7 +42,7 @@ $lengthWarningMessage: #ff0000;
     max-width: 200px;
     line-height: 15px;
     mat-card-subtitle {
-      color: $lengthWarningMessage !important;
+      color: $length-warning-message !important;
       animation: pulse 3s infinite;
     }
   }
@@ -56,6 +56,11 @@ $lengthWarningMessage: #ff0000;
     color: red;
   }
 }
+.errors-types-tooltip {
+  font-size: 20px;
+  margin-bottom: 10px;
+  display: flex;
+}
 .errors-types {
   margin: 20px 20px;
   ul {
@@ -64,7 +69,7 @@ $lengthWarningMessage: #ff0000;
     li {
       display: flex;
       flex-direction: row;
-      justify-content: start;
+      justify-content: flex-start;
       align-items: center;
       .color-box {
         width: 30px;
@@ -133,19 +138,19 @@ $lengthWarningMessage: #ff0000;
 }
 .error-field {
   &-empty {
-    background-color: $emptyField;
+    background-color: $empty-field;
   }
   &-duplicate {
-    background-color: $duplicatedValue;
+    background-color: $duplicated-value;
   }
   &-wrong-length {
-    background-color: $wrongLength;
+    background-color: $wrong-length;
   }
   &-wrong-format {
-    background-color: $wrongFormat;
+    background-color: $wrong-format;
   }
   &-wrong-language {
-    background-color: $wrongLanguage;
+    background-color: $wrong-language;
   }
 }
 .loader-container {
@@ -182,13 +187,13 @@ $lengthWarningMessage: #ff0000;
 }
 @keyframes pulse {
   0% {
-    color: $lengthWarningMessage;
+    color: $length-warning-message;
   }
   50% {
     opacity: 0.2;
   }
   100% {
-    color: $lengthWarningMessage;
+    color: $length-warning-message;
   }
 }
 ::ng-deep .import-providers-table-tooltip {

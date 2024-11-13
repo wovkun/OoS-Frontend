@@ -24,7 +24,7 @@
         <span class="incorrect-row-number">{{ dataSourceInvalid.length }}</span>
       </mat-slide-toggle>
     </ng-container>
-    <app-info-menu *ngIf="dataSourceInvalid?.length" style="font-size: 20px; margin-bottom: 10px; display: flex" [isBigIcon]="true">
+    <app-info-menu *ngIf="dataSourceInvalid?.length" class="errors-types-tooltip" [isBigIcon]="true">
       <div class="errors-types">
         <h3>{{ 'IMPORT/EXPORT.ERRORS.ERRORS_TYPES' | translate }}</h3>
         <ul>
@@ -71,7 +71,7 @@
               [ngClass]="{
                 'error-field-empty': element.errors.employeeSurnameEmpty,
                 'error-field-wrong-length': element.errors.employeeSurnameLength,
-                'error-field-wrong-language':element.errors.employeeSurnameLanguage
+                'error-field-wrong-language': element.errors.employeeSurnameLanguage
               }"
               [matTooltip]="element.employeeSurname"
               showTooltipIfTruncated
@@ -88,7 +88,7 @@
               [ngClass]="{
                 'error-field-empty': element.errors.employeeNameEmpty,
                 'error-field-wrong-length': element.errors.employeeNameLength,
-                'error-field-wrong-language':element.errors.employeeNameLanguage
+                'error-field-wrong-language': element.errors.employeeNameLanguage
               }"
               [matTooltip]="element.employeeName"
               showTooltipIfTruncated
@@ -105,7 +105,7 @@
               [ngClass]="{
                 'error-field-empty': element.errors.employeeFatherNameEmpty,
                 'error-field-wrong-length': element.errors.employeeFatherNameLength,
-                'error-field-wrong-language':element.errors.employeeFatherNameLanguage
+                'error-field-wrong-language': element.errors.employeeFatherNameLanguage
               }"
               [matTooltip]="element.employeeFatherName"
               showTooltipIfTruncated
@@ -121,8 +121,7 @@
               *matCellDef="let element"
               [ngClass]="{
                 'error-field-empty': element.errors.employeeRNOKPPEmpty,
-                'error-field-wrong-format': element.errors.employeeRNOKPPFormat
-              }">
+                'error-field-duplicate': element.errors.employeeRNOKPPDuplicate }">
               {{ element.employeeRNOKPP }}
             </td>
           </ng-container>
@@ -133,7 +132,7 @@
               *matCellDef="let element"
               [ngClass]="{
                 'error-field-empty': element.errors.employeeAssignedRoleEmpty,
-                'error-field-wrong-format': element.errors.employeeAssignedRoleFormat,
+                'error-field-wrong-format': element.errors.employeeAssignedRoleFormat
               }">
               {{ element.employeeAssignedRole }}
             </td>

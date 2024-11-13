@@ -24,8 +24,8 @@ export class ImportValidationService {
       item.errors[`${fieldName}Length`] = true;
     } else if (config.checkLanguage && !NO_LATIN_REGEX.test(item[fieldName])) {
       item.errors[`${fieldName}Language`] = true;
-    } else if (config.checkRNOKPP && !RNOKPP_REGEX.test(item[fieldName].toString())) {
-      item.errors[`${fieldName}Format`] = true;
+    } else if (config.checkDuplicate) {
+      item.errors[`${fieldName}Duplicate`] = true;
     } else if (
       config.checkAssignedRole &&
       item[fieldName] !== ImportEmployeesChosenRole.employee &&

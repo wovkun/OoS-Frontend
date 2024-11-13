@@ -11,7 +11,10 @@ import { FieldsConfig } from 'shared/models/admin-import-export.model';
   template: '<div></div>',
   styleUrls: ['./upload-excel.component.scss']
 })
-export class UploadExcelComponent<T extends { errors: any }, U extends T & { id: number }> {
+export class UploadExcelComponent<
+  ImitatorInterface extends { errors: unknown },
+  ImitatorInterfaceWithID extends ImitatorInterface & { id: number }
+> {
   public extendsComponentConfig: FieldsConfig[];
   public isToggle: boolean;
   public isLoading: boolean = false;
@@ -22,8 +25,8 @@ export class UploadExcelComponent<T extends { errors: any }, U extends T & { id:
   public standardHeadersBase: string[];
   public readonly topPosToStartShowing: number = 250;
 
-  public dataSource: U[];
-  public dataSourceInvalid: U[];
+  public dataSource: ImitatorInterfaceWithID[];
+  public dataSourceInvalid: ImitatorInterfaceWithID[];
 
   constructor(
     private readonly importValidationService: ImportValidationService,
@@ -78,7 +81,7 @@ export class UploadExcelComponent<T extends { errors: any }, U extends T & { id:
         const wsname = workBook.SheetNames[0];
         const currentHeaders = this.getCurrentHeaders(workBook, wsname);
         if (this.checkHeadersIsValid(currentHeaders)) {
-          const items = this.getProvidersData(workBook, wsname) as unknown as T[];
+          const items = this.getProvidersData(workBook, wsname) as unknown as ImitatorInterface[];
           this.processProvidersData(items);
         }
       } catch (error) {
@@ -98,7 +101,7 @@ export class UploadExcelComponent<T extends { errors: any }, U extends T & { id:
    * in the file (header:Director`s name = key:directorsName)the order is strict
    * @returns array of objects,each object is provider`s data
    */
-  public getProvidersData(workBook: XLSX.WorkBook, wsname: string): T[] {
+  public getProvidersData(workBook: XLSX.WorkBook, wsname: string): ImitatorInterface[] {
     return XLSX.utils.sheet_to_json(workBook.Sheets[wsname], {
       header: this.columnNamesBase,
       range: 1
@@ -111,9 +114,9 @@ export class UploadExcelComponent<T extends { errors: any }, U extends T & { id:
    * 2. define ID key to each provider
    * @param items
    */
-  public processProvidersData(items: T[]): void {
+  public processProvidersData(items: ImitatorInterface[]): void {
     const isArrayTruncated = this.showsIsTruncated(items);
-    const itemsId = items.map((elem, index) => ({ ...elem, id: index })) as U[];
+    const itemsId = items.map((elem, index) => ({ ...elem, id: index })) as ImitatorInterfaceWithID[];
     this.handleData(itemsId, isArrayTruncated);
   }
 
@@ -122,7 +125,7 @@ export class UploadExcelComponent<T extends { errors: any }, U extends T & { id:
    * @param items - items with ID
    * @param isArrayTruncated - indicates whether the array was truncated
    */
-  public handleData(items: U[], isArrayTruncated: boolean): void {
+  public handleData(items: ImitatorInterfaceWithID[], isArrayTruncated: boolean): void {
     this.importValidationService.checkForInvalidData(items, this.extendsComponentConfig);
     this.dataSource = items;
     this.dataSourceInvalid = this.filterInvalidItems(items);
@@ -139,7 +142,7 @@ export class UploadExcelComponent<T extends { errors: any }, U extends T & { id:
     target.value = '';
   }
 
-  public filterInvalidItems(items: U[]): U[] {
+  public filterInvalidItems(items: ImitatorInterfaceWithID[]): ImitatorInterfaceWithID[] {
     return items.filter((elem) => Object.values(elem.errors).find((error) => error !== null));
   }
 
@@ -162,7 +165,7 @@ export class UploadExcelComponent<T extends { errors: any }, U extends T & { id:
   }
 
   public sendValidProviders(): void {
-    // const requestProvider: ValidProviders[] = this.dataSource.map(({ errors, ...rest }) => rest);
-    // this.importService.postProviders(requestProvider);
+    const noErrorsItems = this.dataSource.map(({ errors, ...rest }) => rest);
+    console.log(noErrorsItems);
   }
 }
