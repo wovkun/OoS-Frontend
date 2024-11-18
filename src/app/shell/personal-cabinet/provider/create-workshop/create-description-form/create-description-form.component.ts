@@ -62,8 +62,6 @@ export class CreateDescriptionFormComponent implements OnInit, OnDestroy {
   public competitiveSelectionRadioBtn: FormControl = new FormControl(false);
   public separatorKeysCodes = [COMMA, ENTER];
 
-  public directionsControl: FormControl = new FormControl([]);
-
   public tagsControl: FormControl = new FormControl([]);
 
   public compareItems(item1: Direction, item2: Direction): boolean {
