@@ -129,6 +129,10 @@
   }
 }
 
+.header-disabled {
+  pointer-events: none;
+}
+
 .nav-mobile {
   display: flex;
   align-items: center;
