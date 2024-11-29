@@ -80,6 +80,7 @@ import { NotificationDescriptionPipe } from './pipes/notification-description.pi
 import { PhonePipe } from './pipes/phone.pipe';
 import { TextSliceTransformPipe } from './pipes/text-slice-transform.pipe';
 import { TranslateCasesPipe } from './pipes/translate-cases.pipe';
+import { ServerErrorPageComponent } from './components/server-error-page/server-error-page.component';
 
 @NgModule({
   declarations: [
@@ -151,7 +152,8 @@ import { TranslateCasesPipe } from './pipes/translate-cases.pipe';
     NotificationDescriptionPipe,
     InfoMenuComponent,
     ImageCarouselComponent,
-    CustomCarouselDirective
+    CustomCarouselDirective,
+    ServerErrorPageComponent
   ],
 
   imports: [
