@@ -1,10 +1,8 @@
-import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { WINDOW } from 'ngx-window-token';
+import { Component, OnInit } from '@angular/core';
 import { UploadExcelComponent } from 'shared/base-components/upload-excel/upload-excel.component';
 import { ImportEmployeesColumnsNames, ImportEmployeesStandardHeaders } from 'shared/enum/enumUA/import-export';
 import { Employee, EmployeeId, FieldsConfig } from 'shared/models/admin-import-export.model';
+import { ExcelUploadProcessorService } from 'shared/services/excel-upload-processor/excel-upload-processor.service';
 import { ImportValidationService } from 'shared/services/import-validation/import-validation.service';
 
 @Component({
@@ -37,13 +35,8 @@ export class ProviderEmployeesUploadComponent extends UploadExcelComponent<Emplo
       validationParam: { checkEmpty: true, checkAssignedRole: true }
     }
   ];
-  constructor(
-    importValidationService: ImportValidationService,
-    translate: TranslateService,
-    @Inject(DOCUMENT) document: Document,
-    @Inject(WINDOW) window: Window
-  ) {
-    super(importValidationService, translate, document, window);
+  constructor(importValidationService: ImportValidationService, excelService: ExcelUploadProcessorService) {
+    super(importValidationService, excelService);
     this.extendsComponentConfig = this.componentFieldsConfig;
   }
   public ngOnInit(): void {
