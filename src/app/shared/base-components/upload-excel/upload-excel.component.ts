@@ -35,24 +35,6 @@ export class UploadExcelComponent<
     @Inject(WINDOW) private readonly window: Window
   ) {}
 
-  @HostListener('window:scroll')
-  public checkScroll(): void {
-    const scrollPosition = this.document.documentElement.scrollTop || this.document.body.scrollTop || 0;
-    if (scrollPosition >= this.topPosToStartShowing) {
-      this.isGoTopBtnVisible = true;
-    } else {
-      this.isGoTopBtnVisible = false;
-    }
-  }
-
-  public gotoTop(): void {
-    this.window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
-    });
-  }
-
   public setColumnNames(columnNames: string[]): void {
     this.columnNamesBase = columnNames;
   }
