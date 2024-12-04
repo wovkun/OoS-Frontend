@@ -29,6 +29,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
   private provider$: Observable<Provider>;
   @Select(RegistrationState.role)
   private role$: Observable<Role>;
+  @Select(RegistrationState.provider)
+  private currentProvider$: Observable<Provider>;
 
   public readonly entityType = EntityType;
 
@@ -36,6 +38,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   public workshop: Workshop;
   public provider: Provider;
   public role: Role;
+  public currentProvider: Provider;
 
   public entity: EntityType;
   public displayActionCard: boolean;
@@ -71,14 +74,14 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   private setDataSubscribtion(): void {
-    combineLatest([this.isMobileScreen$, this.role$, this.workshop$, this.provider$])
+    combineLatest([this.isMobileScreen$, this.role$, this.workshop$, this.provider$, this.currentProvider$])
       .pipe(takeUntil(this.destroy$))
-      .subscribe(([isMobileScreen, role, workshop, provider]) => {
+      .subscribe(([isMobileScreen, role, workshop, provider, currentProvider]) => {
         this.isMobileScreen = isMobileScreen;
         this.role = role;
         this.workshop = workshop;
         this.provider = provider;
-
+        this.currentProvider = currentProvider;
         this.displayActionCard = this.role === Role.parent || this.role === Role.unauthorized;
       });
   }
