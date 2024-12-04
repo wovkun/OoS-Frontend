@@ -3,6 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MAT_SNACK_BAR_DATA, MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
+import { ENTER, SPACE } from '@angular/cdk/keycodes';
 
 import { MessageBarData } from 'shared/models/message-bar.model';
 import { MessageBarComponent } from './message-bar.component';
@@ -83,7 +84,7 @@ describe('SnackBarComponent', () => {
     const snackBarDismissSpy = jest.spyOn(matSnackBar, 'dismiss');
     const closingButton = fixture.debugElement.query(By.css('[data-testid="closing-button"]'));
 
-    const event = new KeyboardEvent('keydown', { key: 'Enter' });
+    const event = new KeyboardEvent('keydown', { keyCode: ENTER });
     closingButton.nativeElement.dispatchEvent(event);
 
     expect(snackBarDismissSpy).toHaveBeenCalledTimes(1);
@@ -93,7 +94,7 @@ describe('SnackBarComponent', () => {
     const snackBarDismissSpy = jest.spyOn(matSnackBar, 'dismiss');
     const closingButton = fixture.debugElement.query(By.css('[data-testid="closing-button"]'));
 
-    const event = new KeyboardEvent('keydown', { key: ' ' });
+    const event = new KeyboardEvent('keydown', { keyCode: SPACE });
     const preventDefaultSpy = jest.spyOn(event, 'preventDefault');
 
     closingButton.nativeElement.dispatchEvent(event);
