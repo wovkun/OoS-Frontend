@@ -4,7 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyChipsModule as MatChipsModule } from '@angular/material/legacy-chips';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { MatRadioModule } from '@angular/material/radio';
@@ -63,6 +63,39 @@ describe('CreateDescriptionFormComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should add keyword', () => {
+    component.keyWordsCtrl.setValue('Test');
+
+    component.onKeyWordsInput();
+
+    expect(component.keyWords).toEqual(['test']);
+    expect(component.keyWordsCtrl.value).toBe('');
+  });
+
+  it('should disable input if keyword limit is reached', () => {
+    component.keyWords = ['one', 'two', 'three', 'four'];
+    component.keyWordsCtrl.setValue('Test');
+
+    component.onKeyWordsInput();
+
+    expect(component.keyWordsCtrl.disabled).toBeTruthy();
+  });
+
+  it('should enable input if keyword limit is less than 5', () => {
+    component.keyWords = ['one', 'two', 'three', 'four', 'five'];
+
+    component.onRemoveKeyWord('one');
+
+    expect(component.keyWordsCtrl.disabled).toBeFalsy();
+  });
+  it('should remove keyword', () => {
+    component.keyWords = ['one', 'two', 'three', 'four', 'five'];
+
+    component.onRemoveKeyWord('five');
+
+    expect(component.keyWords.length).toBe(4);
   });
 });
 
