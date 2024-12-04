@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBar } from '@angular/material/snack-bar';
+import { ENTER, SPACE } from '@angular/cdk/keycodes';
 
 import { MessageBarIcon } from 'shared/enum/message-bar';
 import { MessageBarData } from 'shared/models/message-bar.model';
@@ -26,7 +27,7 @@ export class MessageBarComponent implements OnInit {
   }
 
   public onKeyDown(event: KeyboardEvent): void {
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (event.keyCode === ENTER || event.keyCode === SPACE) {
       event.preventDefault();
       this.onClose();
     }
