@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -8,11 +8,15 @@ import { MUST_CONTAIN_LETTERS } from 'shared/constants/regex-constants';
 import { ValidationConstants } from 'shared/constants/validation';
 import { Provider } from 'shared/models/provider.model';
 import { Workshop, WorkshopDescriptionItem } from 'shared/models/workshop.model';
+import { FormOfLearning } from 'shared/enum/workshop';
+import { FormOfLearningEnum } from 'shared/enum/enumUA/workshop';
+import { Util } from 'shared/utils/utils';
 
 @Component({
   selector: 'app-create-description-form',
   templateUrl: './create-description-form.component.html',
-  styleUrls: ['./create-description-form.component.scss']
+  styleUrls: ['./create-description-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateDescriptionFormComponent implements OnInit, OnDestroy {
   @Input() public workshop: Workshop;
@@ -24,6 +28,9 @@ export class CreateDescriptionFormComponent implements OnInit, OnDestroy {
   @ViewChild('keyWordsInput') public keyWordsInputElement: ElementRef;
 
   public readonly validationConstants = ValidationConstants;
+  public readonly FormOfLearning = FormOfLearning;
+  public readonly FormOfLearningEnum = FormOfLearningEnum;
+  public readonly Util = Util;
   public readonly cropperConfig = {
     cropperMinWidth: CropperConfigurationConstants.cropperMinWidth,
     cropperMaxWidth: CropperConfigurationConstants.cropperMaxWidth,
@@ -45,6 +52,7 @@ export class CreateDescriptionFormComponent implements OnInit, OnDestroy {
 
   public disabilityOptionRadioBtn: FormControl = new FormControl(false);
 
+  public competitiveSelectionRadioBtn: FormControl = new FormControl(false);
   public separatorKeysCodes = [COMMA, ENTER];
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -56,10 +64,10 @@ export class CreateDescriptionFormComponent implements OnInit, OnDestroy {
         Validators.minLength(ValidationConstants.INPUT_LENGTH_1),
         Validators.maxLength(ValidationConstants.INPUT_LENGTH_256)
       ]),
-      keyWords: new FormControl(''),
-      institutionHierarchyId: new FormControl('', Validators.required),
-      institutionId: new FormControl('', Validators.required),
-      workshopDescriptionItems: this.SectionItemsFormArray
+      keyWords: new FormControl(null),
+      workshopDescriptionItems: this.SectionItemsFormArray,
+      competitiveSelection: new FormControl(false),
+      competitiveSelectionDescription: null
     });
   }
 
@@ -74,6 +82,8 @@ export class CreateDescriptionFormComponent implements OnInit, OnDestroy {
 
     this.passDescriptionFormGroup.emit(this.DescriptionFormGroup);
     this.keyWordsListener();
+
+    this.onCompetitiveSelectionInit();
   }
 
   /**
@@ -166,7 +176,7 @@ export class CreateDescriptionFormComponent implements OnInit, OnDestroy {
   /**
    * This method fills inputs with information of edited workshop
    */
-  private activateEditMode(): void {
+  public activateEditMode(): void {
     this.DescriptionFormGroup.patchValue(this.workshop, { emitEvent: false });
 
     this.workshop.keywords.forEach((keyWord: string) => {
@@ -189,6 +199,24 @@ export class CreateDescriptionFormComponent implements OnInit, OnDestroy {
     } else {
       this.onAddForm();
     }
+
+    if (this.workshop.competitiveSelection) {
+      this.DescriptionFormGroup.addControl(
+        'competitiveSelectionDescription',
+        new FormControl(this.workshop.competitiveSelectionDescription || '', Validators.required)
+      );
+    }
+
+    this.competitiveSelectionRadioBtn.setValue(this.workshop.competitiveSelection);
+  }
+
+  private onCompetitiveSelectionInit(): void {
+    this.competitiveSelectionRadioBtn.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((value: boolean) => {
+      this.DescriptionFormGroup.get('competitiveSelection').setValue(value);
+      if (!value) {
+        this.DescriptionFormGroup.get('competitiveSelectionDescription').reset();
+      }
+    });
   }
 
   /**
