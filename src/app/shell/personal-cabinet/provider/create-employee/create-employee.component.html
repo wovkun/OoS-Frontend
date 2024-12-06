@@ -115,7 +115,7 @@
             class="btn"
             mat-button
             type="submit"
-            [disabled]="!EmployeeFormGroup.dirty || !managedWorkshopIds || managedWorkshopIds?.length === 0"
+            [disabled]="!EmployeeFormGroup.dirty || (!isDeputy && !managedWorkshopIds) || managedWorkshopIds?.length === 0"
             (click)="onSubmit()">
             {{ 'BUTTONS.SAVE' | translate }}
           </button>
