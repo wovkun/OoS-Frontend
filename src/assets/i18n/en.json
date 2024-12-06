@@ -390,7 +390,7 @@
       "FOUNDER": "Founder",
       "DIRECTOR_NAME": "Director's full name",
       "DIRECTOR_BIRTHDAY": "Date of birth of the director",
-      "SELECT_WORKSHOPS": "Check the workshops to which the administrator will have access",
+      "SELECT_WORKSHOPS": "Check the workshops to which the employee will have access",
       "CHECK_WORKSHOPS": "Check workshops",
       "ROLE": "Role",
       "STATUS": "Status",
@@ -628,11 +628,11 @@
       "ALL": "All",
       "DEPUTIES": "Deputies",
       "ASSISTANTS": "Assistants",
-      "REMOVE_ADMIN_OPTION": "Administrator was removed from the workshop",
-      "ADD_ADMIN_OPTION": "Administrator was added to the workshop",
-      "BLOCK_ADMIN_OPTION": "Administrator was blocked",
-      "UPDATE_ADMIN_OPTION": "Administrator was updated",
-      "REINVITE_ADMIN_OPTION": "Administrator was reinvited"
+      "REMOVE_ADMIN_OPTION": "Employee was removed from the workshop",
+      "ADD_ADMIN_OPTION": "Employee was added to the workshop",
+      "BLOCK_ADMIN_OPTION": "Employee was blocked",
+      "UPDATE_ADMIN_OPTION": "Employee was updated",
+      "REINVITE_ADMIN_OPTION": "Employee was reinvited"
     },
     "STATUS_CHANGE_TYPE": "Application status change",
     "USERS_FILTERS": {
