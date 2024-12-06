@@ -15,7 +15,7 @@ import { WorkshopCardParameters, WorkshopProviderViewCard } from 'shared/models/
 import { PushNavPath } from 'shared/store/navigation.actions';
 import {
   DeleteWorkshopById,
-  GetProviderAdminWorkshops,
+  GetEmployeeWorkshops,
   GetProviderViewWorkshops,
   OnUpdateWorkshopStatusSuccess
 } from 'shared/store/provider.actions';
@@ -115,7 +115,7 @@ export class ProviderWorkshopsComponent extends ProviderComponent implements OnI
     if (this.role === Role.provider) {
       this.store.dispatch(new GetProviderViewWorkshops(this.workshopCardParameters));
     } else {
-      this.store.dispatch(new GetProviderAdminWorkshops(this.workshopCardParameters));
+      this.store.dispatch(new GetEmployeeWorkshops(this.workshopCardParameters));
     }
   }
 }

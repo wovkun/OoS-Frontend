@@ -2,8 +2,8 @@ export enum Role {
   all = 'all',
   unauthorized = 'unauthorized',
   provider = 'provider',
-  providerAdmin = 'provideradmin',
   providerDeputy = 'providerdeputy',
+  employee = 'employee',
   parent = 'parent',
   techAdmin = 'techadmin',
   ministryAdmin = 'ministryadmin',
@@ -14,8 +14,8 @@ export enum Role {
 export enum EntityType {
   provider = 'provider',
   workshop = 'workshop',
-  ProviderAdmin = 'provideradmin',
-  ProviderDeputy = 'provider',
+  providerDeputy = 'provider',
+  employee = 'employee',
   None = 'provider'
 }
 

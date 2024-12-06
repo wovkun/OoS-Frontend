@@ -19,7 +19,7 @@ import { BlockedParent } from 'shared/models/block.model';
 import { TruncatedItem } from 'shared/models/item.model';
 import { Provider } from 'shared/models/provider.model';
 import { PushNavPath } from 'shared/store/navigation.actions';
-import { BlockParent, GetWorkshopListByProviderAdminId, GetWorkshopListByProviderId, UnBlockParent } from 'shared/store/provider.actions';
+import { BlockParent, GetWorkshopListByEmployeeId, GetWorkshopListByProviderId, UnBlockParent } from 'shared/store/provider.actions';
 import { ProviderState } from 'shared/store/provider.state';
 import { RegistrationState } from 'shared/store/registration.state';
 import { GetApplicationsByPropertyId, UpdateApplication } from 'shared/store/shared-user.actions';
@@ -156,8 +156,8 @@ export class ProviderApplicationsComponent extends CabinetDataComponent implemen
           this.providerId = provider.id;
           break;
         case Role.providerDeputy:
-        case Role.providerAdmin:
-          this.applicationParams.property = ApplicationEntityType.ProviderAdmin;
+        case Role.employee:
+          this.applicationParams.property = ApplicationEntityType.Employee;
           this.providerId = this.store.selectSnapshot(RegistrationState.user).id;
           break;
       }
@@ -186,8 +186,8 @@ export class ProviderApplicationsComponent extends CabinetDataComponent implemen
         this.store.dispatch(new GetWorkshopListByProviderId(this.providerId));
         break;
       case Role.providerDeputy:
-      case Role.providerAdmin:
-        this.store.dispatch(new GetWorkshopListByProviderAdminId(this.providerId));
+      case Role.employee:
+        this.store.dispatch(new GetWorkshopListByEmployeeId(this.providerId));
         break;
     }
   }

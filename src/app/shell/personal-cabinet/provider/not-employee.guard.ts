@@ -9,14 +9,14 @@ import { RegistrationState } from 'shared/store/registration.state';
 @Injectable({
   providedIn: 'root'
 })
-export class NotProviderAdminGuard {
+export class NotEmployeeGuard {
   @Select(RegistrationState.role)
   public role$: Observable<string>;
 
   public canActivate(): Observable<boolean> {
     return this.role$.pipe(
       filter(Boolean),
-      map((role: string) => role !== Role.providerAdmin)
+      map((role: string) => role !== Role.employee)
     );
   }
 }
