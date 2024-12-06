@@ -15,7 +15,7 @@ import { MessageBarData } from 'shared/models/message-bar.model';
 import { MinistryAdmin } from 'shared/models/ministry-admin.model';
 import { Notification } from 'shared/models/notification.model';
 import { PaginationElement } from 'shared/models/pagination-element.model';
-import { Employee } from 'shared/models/provider-admin.model';
+import { Employee } from 'shared/models/employee.model';
 import { PaginationParameters } from 'shared/models/query-parameters.model';
 import { Person } from 'shared/models/user.model';
 import { AdminsTableData, EmployeesTableData, UsersTableData } from 'shared/models/users-table';

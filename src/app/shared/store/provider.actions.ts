@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Achievement, AchievementParameters } from 'shared/models/achievement.model';
 import { ApplicationFilterParameters } from 'shared/models/application.model';
 import { BlockedParent, EmployeeBlockData } from 'shared/models/block.model';
-import { Employee, EmployeeParameters } from 'shared/models/provider-admin.model';
+import { Employee, EmployeeParameters } from 'shared/models/employee.model';
 import { Provider, ProviderParameters, ProviderWithLicenseStatus, ProviderWithStatus } from 'shared/models/provider.model';
 import { PaginationParameters } from 'shared/models/query-parameters.model';
 import { Workshop, WorkshopCardParameters, WorkshopProviderViewCard, WorkshopStatus } from 'shared/models/workshop.model';

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { EmployeeBlockData } from 'shared/models/block.model';
-import { Employee, EmployeeParameters } from 'shared/models/provider-admin.model';
+import { Employee, EmployeeParameters } from 'shared/models/employee.model';
 import { SearchResponse } from 'shared/models/search.model';
 
 @Injectable({

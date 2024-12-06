@@ -16,7 +16,7 @@ import { UserStatusesTitles } from 'shared/enum/enumUA/statuses';
 import { ModalConfirmationType } from 'shared/enum/modal-confirmation';
 import { EmployeeParams, EmployeeRole } from 'shared/enum/employee';
 import { PaginationElement } from 'shared/models/pagination-element.model';
-import { Employee, EmployeeParameters } from 'shared/models/provider-admin.model';
+import { Employee, EmployeeParameters } from 'shared/models/employee.model';
 import { SearchResponse } from 'shared/models/search.model';
 import { EmployeesBlockData, EmployeesTableData } from 'shared/models/users-table';
 import { PushNavPath } from 'shared/store/navigation.actions';
@@ -112,7 +112,7 @@ export class EmployeesComponent extends ProviderComponent implements OnInit, OnD
    */
   public onUpdate(user: EmployeesTableData): void {
     const userRole = EmployeeRole.admin;
-    this.router.navigate([`update-provider-admin/${userRole}/${user.id}`]);
+    this.router.navigate([`update-employee/${userRole}/${user.id}`]);
   }
 
   /**

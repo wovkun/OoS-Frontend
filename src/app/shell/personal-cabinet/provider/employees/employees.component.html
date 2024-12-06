@@ -51,7 +51,7 @@
 </ng-template>
 
 <ng-template #DeputyBtnViewTmpl>
-  <a [routerLink]="['/create-provider-admin', employeeRole.admin]">
+  <a [routerLink]="['/create-employee', employeeRole.admin]">
     <button class="btn" mat-raised-button>{{ 'BUTTONS.ADD' | translate }}</button>
   </a>
 </ng-template>
@@ -85,21 +85,21 @@
       <mat-icon>arrow_drop_down</mat-icon>
     </button>
     <mat-menu #add="matMenu" class="header_menu">
-      <a [routerLink]="['/create-provider-admin', employeeRole.deputy]">
+      <a [routerLink]="['/create-employee', employeeRole.deputy]">
         <button mat-menu-item>{{ 'ENUM.EMPLOYEES_DECLINATION.PROVIDER_DEPUTY_GENETIVE' | translate }}</button>
       </a>
-      <a [routerLink]="['/create-provider-admin', employeeRole.admin]">
+      <a [routerLink]="['/create-employee', employeeRole.admin]">
         <button mat-menu-item>{{ 'ENUM.EMPLOYEES_DECLINATION.EMPLOYEE_GENETIVE' | translate }}</button>
       </a>
     </mat-menu>
   </ng-container>
   <ng-container *ngSwitchCase="1">
-    <a [routerLink]="['/create-provider-admin', employeeRole.deputy]">
+    <a [routerLink]="['/create-employee', employeeRole.deputy]">
       <button class="btn" mat-raised-button>{{ 'BUTTONS.ADD' | translate }}</button>
     </a>
   </ng-container>
   <ng-container *ngSwitchCase="2">
-    <a [routerLink]="['/create-provider-admin', employeeRole.admin]">
+    <a [routerLink]="['/create-employee', employeeRole.admin]">
       <button class="btn" mat-raised-button>{{ 'BUTTONS.ADD' | translate }}</button>
     </a>
   </ng-container>

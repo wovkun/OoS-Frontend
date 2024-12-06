@@ -18,7 +18,7 @@ import { NoResultCardComponent } from 'shared/components/no-result-card/no-resul
 import { Constants } from 'shared/constants/constants';
 import { ModalConfirmationType } from 'shared/enum/modal-confirmation';
 import { Role } from 'shared/enum/role';
-import { EmployeeParameters } from 'shared/models/provider-admin.model';
+import { EmployeeParameters } from 'shared/models/employee.model';
 import { Provider } from 'shared/models/provider.model';
 import { EmployeesBlockData, EmployeesTableData } from 'shared/models/users-table';
 import { EmployeesComponent } from './employees.component';

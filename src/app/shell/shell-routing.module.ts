@@ -111,14 +111,14 @@ const routes: Routes = [
     canDeactivate: [CreateProviderGuard, CreateGuard]
   },
   {
-    path: 'create-provider-admin/:param',
+    path: 'create-employee/:param',
     component: CreateEmployeeComponent,
     loadChildren: () => import('./personal-cabinet/provider/provider.module').then((m) => m.ProviderModule),
     canLoad: [ProviderGuard],
     canDeactivate: [CreateGuard]
   },
   {
-    path: 'update-provider-admin/:param/:id',
+    path: 'update-employee/:param/:id',
     component: CreateEmployeeComponent,
     loadChildren: () => import('./personal-cabinet/provider/provider.module').then((m) => m.ProviderModule),
     canLoad: [ProviderGuard],

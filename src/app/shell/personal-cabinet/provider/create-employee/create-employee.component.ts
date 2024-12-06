@@ -17,7 +17,7 @@ import { ModalConfirmationType } from 'shared/enum/modal-confirmation';
 import { EmployeeRole } from 'shared/enum/employee';
 import { Role } from 'shared/enum/role';
 import { TruncatedItem } from 'shared/models/item.model';
-import { Employee } from 'shared/models/provider-admin.model';
+import { Employee } from 'shared/models/employee.model';
 import { Provider } from 'shared/models/provider.model';
 import { NavigationBarService } from 'shared/services/navigation-bar/navigation-bar.service';
 import { AddNavPath } from 'shared/store/navigation.actions';
@@ -53,6 +53,7 @@ export class CreateEmployeeComponent extends CreateFormComponent implements OnIn
 
   public EmployeeFormGroup: FormGroup;
   public managedWorkshopIds: string[];
+  public isDeputy: boolean;
   public entityControl = new FormControl();
   public formTitle: string;
 
@@ -79,6 +80,7 @@ export class CreateEmployeeComponent extends CreateFormComponent implements OnIn
     });
 
     this.providerRole = EmployeeRole[this.route.snapshot.paramMap.get('param')];
+    this.isDeputy = this.providerRole === EmployeeRole.deputy;
 
     this.subscribeOnDirtyForm(this.EmployeeFormGroup);
   }
@@ -87,7 +89,9 @@ export class CreateEmployeeComponent extends CreateFormComponent implements OnIn
     this.determineEditMode();
     this.provider$.pipe(filter(Boolean), takeUntil(this.destroy$)).subscribe((provider: Provider) => {
       this.provider = provider;
-      this.store.dispatch(new GetWorkshopListByProviderId(this.provider.id));
+      if (!this.isDeputy) {
+        this.store.dispatch(new GetWorkshopListByProviderId(this.provider.id));
+      }
     });
   }
 
@@ -103,7 +107,13 @@ export class CreateEmployeeComponent extends CreateFormComponent implements OnIn
   }
 
   public setEditMode(): void {
-    combineLatest([this.employee$.pipe(filter(Boolean)), this.truncatedItems$.pipe(filter(Boolean))])
+    const editObservables: Observable<Employee | TruncatedItem[]>[] = [this.employee$.pipe(filter(Boolean))];
+
+    if (!this.isDeputy) {
+      editObservables.push(this.truncatedItems$.pipe(filter(Boolean)));
+    }
+
+    combineLatest(editObservables)
       .pipe(takeUntil(this.destroy$))
       .subscribe(([employee, allEntities]: [Employee, TruncatedItem[]]) => {
         this.EmployeeFormGroup.patchValue(employee, { emitEvent: false });
@@ -125,9 +135,9 @@ export class CreateEmployeeComponent extends CreateFormComponent implements OnIn
     let navBarTitle: string;
 
     if (this.editMode) {
-      navBarTitle = NavBarName.UpdateEmployee;
+      navBarTitle = this.isDeputy ? NavBarName.UpdateProviderDeputy : NavBarName.UpdateEmployee;
     } else {
-      navBarTitle = NavBarName.CreateEmployee;
+      navBarTitle = this.isDeputy ? NavBarName.CreateProviderDeputy : NavBarName.UpdateEmployee;
     }
 
     this.store.dispatch(
@@ -167,9 +177,9 @@ export class CreateEmployeeComponent extends CreateFormComponent implements OnIn
     let confirmationType: string;
 
     if (this.editMode) {
-      confirmationType = ModalConfirmationType.updateEmployee;
+      confirmationType = this.isDeputy ? ModalConfirmationType.updateEmployeeDeputy : ModalConfirmationType.updateEmployee;
     } else {
-      confirmationType = ModalConfirmationType.createEmployee;
+      confirmationType = this.isDeputy ? ModalConfirmationType.createEmployeeDeputy : ModalConfirmationType.createEmployee;
     }
 
     const dialogRef = this.matDialog.open(ConfirmationModalWindowComponent, {
