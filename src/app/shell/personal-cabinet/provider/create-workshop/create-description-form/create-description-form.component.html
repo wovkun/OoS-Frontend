@@ -50,7 +50,7 @@
     <label class="step-characters-count">{{ keyWords.length }}/{{ validationConstants.MAX_KEYWORDS_LENGTH }}</label>
   </div>
   <div class="step-input keywords" (click)="setFocus()">
-    <span *ngIf="!keyWordsCtrl.value && keyWords.length < 1 " class="keywordsPlaceholder"
+    <span *ngIf="!keyWordsCtrl.value && keyWords.length < 1" class="keywordsPlaceholder"
       >{{ 'FORMS.PLACEHOLDERS.KEYWORDS_START' | translate }} {{ validationConstants.MAX_KEYWORDS_LENGTH }}
       {{ 'FORMS.PLACEHOLDERS.KEYWORDS_END' | translate }}</span
     >
