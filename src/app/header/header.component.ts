@@ -24,6 +24,7 @@ import { NavigationState } from 'shared/store/navigation.state';
 import { Login, Logout } from 'shared/store/registration.actions';
 import { RegistrationState } from 'shared/store/registration.state';
 import { isRoleAdmin } from 'shared/utils/admin.utils';
+import { isRoleProvider } from 'shared/utils/provider.utils';
 
 @Component({
   selector: 'app-header',
@@ -54,6 +55,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public readonly RoleLinks = RoleLinks;
   public readonly ModeConstants = ModeConstants;
   public readonly isRoleAdmin = isRoleAdmin;
+  public readonly isRoleProvider = isRoleProvider;
 
   public selectedLanguage = localStorage.getItem('ui-culture');
   public showModalReg = false;

@@ -15,6 +15,7 @@ import { GetPendingApplicationsByProviderId } from 'shared/store/provider.action
 import { ProviderState } from 'shared/store/provider.state';
 import { RegistrationState } from 'shared/store/registration.state';
 import { isRoleAdmin } from 'shared/utils/admin.utils';
+import { isRoleProvider } from 'shared/utils/provider.utils';
 
 @Component({
   selector: 'app-personal-cabinet',
@@ -31,6 +32,7 @@ export class PersonalCabinetComponent implements OnInit, OnDestroy {
   public readonly RoleLinks = RoleLinks;
   public readonly Role = Role;
   public readonly isRoleAdmin = isRoleAdmin;
+  public readonly isRoleProvider = isRoleProvider;
 
   public personalCabinetTitle: PersonalCabinetTitle;
   public userRole: Role;
@@ -55,7 +57,7 @@ export class PersonalCabinetComponent implements OnInit, OnDestroy {
       )
     );
 
-    if (this.userRole === Role.provider) {
+    if (isRoleProvider(this.userRole)) {
       const providerId = this.store.selectSnapshot(RegistrationState.provider).id;
       this.store.dispatch(new GetPendingApplicationsByProviderId(providerId));
     }

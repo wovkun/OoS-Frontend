@@ -24,3 +24,5 @@ export enum UserTabParams {
   parent,
   child
 }
+
+export const ProviderRoles = [Role.provider, Role.providerDeputy, Role.employee];
