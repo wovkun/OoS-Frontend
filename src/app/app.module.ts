@@ -27,7 +27,7 @@ import { NavigationState } from 'shared/store/navigation.state';
 import { NotificationState } from 'shared/store/notification.state';
 import { ParentState } from 'shared/store/parent.state';
 import { ProviderState } from 'shared/store/provider.state';
-import { GetUserPersonalInfo } from 'shared/store/registration.actions';
+import { CheckAuth } from 'shared/store/registration.actions';
 import { RegistrationState } from 'shared/store/registration.state';
 import { SharedUserState } from 'shared/store/shared-user.state';
 import { environment } from '../environments/environment';
@@ -93,7 +93,7 @@ registerLocaleData(localeUk);
     },
     {
       provide: APP_INITIALIZER,
-      useFactory: (store: Store) => (): Observable<unknown> => store.dispatch(new GetUserPersonalInfo()),
+      useFactory: (store: Store) => (): Observable<unknown> => store.dispatch(new CheckAuth()),
       deps: [Store],
       multi: true
     },

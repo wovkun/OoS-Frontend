@@ -11,6 +11,7 @@ import { ModeConstants } from 'shared/constants/constants';
 import { SnackbarText } from 'shared/enum/enumUA/message-bar';
 import { Role } from 'shared/enum/role';
 import { AreaAdmin } from 'shared/models/area-admin.model';
+import { Employee } from 'shared/models/employee.model';
 import { MinistryAdmin } from 'shared/models/ministry-admin.model';
 import { Parent } from 'shared/models/parent.model';
 import { Provider } from 'shared/models/provider.model';
@@ -18,6 +19,7 @@ import { RegionAdmin } from 'shared/models/region-admin.model';
 import { TechAdmin } from 'shared/models/tech-admin.model';
 import { User } from 'shared/models/user.model';
 import { AreaAdminService } from 'shared/services/area-admin/area-admin.service';
+import { EmployeeService } from 'shared/services/employee/employee.service';
 import { MinistryAdminService } from 'shared/services/ministry-admin/ministry-admin.service';
 import { ParentService } from 'shared/services/parent/parent.service';
 import { ProviderService } from 'shared/services/provider/provider.service';
@@ -43,6 +45,7 @@ export interface RegistrationStateModel {
   isAuthorizationLoading: boolean;
   user: User;
   provider: Provider;
+  employee: Employee;
   parent: Parent;
   techAdmin: TechAdmin;
   ministryAdmin: MinistryAdmin;
@@ -59,6 +62,7 @@ export interface RegistrationStateModel {
     isLoading: false,
     user: undefined,
     provider: undefined,
+    employee: undefined,
     parent: undefined,
     techAdmin: undefined,
     regionAdmin: undefined,
@@ -75,6 +79,7 @@ export class RegistrationState {
     private oidcSecurityService: OidcSecurityService,
     private userService: UserService,
     private providerService: ProviderService,
+    private employeeService: EmployeeService,
     private parentService: ParentService,
     private ministryAdminService: MinistryAdminService,
     private regionAdminService: RegionAdminService,
@@ -109,6 +114,11 @@ export class RegistrationState {
   @Selector()
   static provider(state: RegistrationStateModel): Provider {
     return state.provider;
+  }
+
+  @Selector()
+  static employee(state: RegistrationStateModel): Employee {
+    return state.employee;
   }
 
   @Selector()
@@ -179,6 +189,7 @@ export class RegistrationState {
   }: StateContext<RegistrationStateModel>):
     | Observable<Parent>
     | Observable<Provider>
+    | Observable<Employee>
     | Observable<MinistryAdmin>
     | Observable<RegionAdmin>
     | Observable<AreaAdmin> {
@@ -187,17 +198,19 @@ export class RegistrationState {
 
     switch (state.user.role) {
       case Role.parent:
-        return this.parentService.getProfile().pipe(tap((parent: Parent) => patchState({ parent: parent })));
+        return this.parentService.getProfile().pipe(tap((parent: Parent) => patchState({ parent })));
       case Role.provider:
-        return this.providerService.getProfile().pipe(tap((provider: Provider) => patchState({ provider: provider })));
+        return this.providerService.getProfile().pipe(tap((provider: Provider) => patchState({ provider })));
+      case Role.providerDeputy:
+      case Role.employee:
+        // TODO: Add provider patch when profile/provider id will be provided
+        return this.employeeService.getEmployeeById(state.user.id).pipe(tap((employee: Employee) => patchState({ employee })));
       case Role.ministryAdmin:
-        return this.ministryAdminService
-          .getAdminProfile()
-          .pipe(tap((ministryAdmin: MinistryAdmin) => patchState({ ministryAdmin: ministryAdmin })));
+        return this.ministryAdminService.getAdminProfile().pipe(tap((ministryAdmin: MinistryAdmin) => patchState({ ministryAdmin })));
       case Role.regionAdmin:
-        return this.regionAdminService.getAdminProfile().pipe(tap((regionAdmin: RegionAdmin) => patchState({ regionAdmin: regionAdmin })));
+        return this.regionAdminService.getAdminProfile().pipe(tap((regionAdmin: RegionAdmin) => patchState({ regionAdmin })));
       case Role.areaAdmin:
-        return this.areaAdmin.getAdminProfile().pipe(tap((areaAdmin: AreaAdmin) => patchState({ areaAdmin: areaAdmin })));
+        return this.areaAdmin.getAdminProfile().pipe(tap((areaAdmin: AreaAdmin) => patchState({ areaAdmin })));
     }
   }
 
