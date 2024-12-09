@@ -291,7 +291,7 @@
     },
     "HISTORY_LOG": {
       "PROVIDERS": "Заклади",
-      "ADMINS": "Адміністратори",
+      "EMPLOYEES": "Співробітники",
       "APPLICATIONS": "Заявки",
       "USERS": "Користувачі",
       "ADMIN_STATUS": {

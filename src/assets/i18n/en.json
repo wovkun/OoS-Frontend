@@ -291,7 +291,7 @@
     },
     "HISTORY_LOG": {
       "PROVIDERS": "Providers",
-      "ADMINS": "Administrators",
+      "EMPLOYEES": "Employees",
       "APPLICATIONS": "Applications",
       "USERS": "Users",
       "ADMIN_STATUS": {

@@ -3,8 +3,6 @@ import { PaginationParameters } from './query-parameters.model';
 import { Person } from './user.model';
 
 export interface EmployeeParameters extends PaginationParameters {
-  deputyOnly: boolean;
-  assistantsOnly: boolean;
   searchString?: string;
 }
 

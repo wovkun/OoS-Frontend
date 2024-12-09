@@ -48,8 +48,6 @@ export class EmployeesComponent extends ProviderComponent implements OnInit, OnD
   public currentPage: PaginationElement = PaginationConstants.firstPage;
   public tabIndex: number;
   public filterParams: EmployeeParameters = {
-    assistantsOnly: false,
-    deputyOnly: false,
     searchString: '',
     size: PaginationConstants.TABLE_ITEMS_PER_PAGE
   };
@@ -83,13 +81,10 @@ export class EmployeesComponent extends ProviderComponent implements OnInit, OnD
    * @param event MatTabChangeEvent
    */
   public onTabChange(event: MatTabChangeEvent): void {
-    const employeeRoleValues = Object.values(this.employeeRole);
     this.currentPage = PaginationConstants.firstPage;
     this.filterFormControl.reset('', { emitEvent: false });
     this.filterParams.searchString = '';
     this.filterParams.from = 0;
-    this.filterParams.deputyOnly = employeeRoleValues[event.index] === EmployeeRole.deputy;
-    this.filterParams.assistantsOnly = employeeRoleValues[event.index] === EmployeeRole.admin;
     this.getFilteredEmployees();
     this.router.navigate(['./'], {
       relativeTo: this.route,
@@ -194,8 +189,6 @@ export class EmployeesComponent extends ProviderComponent implements OnInit, OnD
   private setTabOptions(): void {
     const role = this.route.snapshot.queryParamMap.get('role');
     this.tabIndex = role ? Object.keys(this.employeeRole).indexOf(role) : 0;
-    this.filterParams.deputyOnly = role === EmployeeRole.deputy;
-    this.filterParams.assistantsOnly = role === EmployeeRole.admin;
     this.currentPage = PaginationConstants.firstPage;
   }
 

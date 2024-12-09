@@ -2,6 +2,7 @@ export enum Role {
   all = 'all',
   unauthorized = 'unauthorized',
   provider = 'provider',
+  // TODO: Remove providerDeputy when position will be implemented, adjust checks
   providerDeputy = 'providerdeputy',
   employee = 'employee',
   parent = 'parent',

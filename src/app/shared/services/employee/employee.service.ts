@@ -25,8 +25,6 @@ export class EmployeeService {
    */
   public getFilteredEmployees(filterParams: EmployeeParameters): Observable<SearchResponse<Employee[]>> {
     const params = new HttpParams()
-      .set('deputyOnly', `${filterParams.deputyOnly}`)
-      .set('assistantsOnly', `${filterParams.assistantsOnly}`)
       .set('searchString', `${filterParams.searchString}`)
       .set('from', `${filterParams.from}`)
       .set('size', `${filterParams.size}`);
