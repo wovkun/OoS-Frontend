@@ -1,6 +1,6 @@
 import { OwlOptions } from 'ngx-owl-carousel-o';
 
-export const DEFAULT_CAROUSEL_OPTIONS: OwlOptions = {
+export const DefaultCarouselOptions: OwlOptions = {
   loop: true,
   autoplay: true,
   dots: true,

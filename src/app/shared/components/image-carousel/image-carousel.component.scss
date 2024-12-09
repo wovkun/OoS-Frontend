@@ -12,50 +12,48 @@ $button-padding: 50px;
   position: relative;
 }
 
-:host ::ng-deep {
-  .owl-carousel {
-    position: relative;
+:host ::ng-deep .owl-carousel {
+  position: relative;
 
-    .owl-prev,
-    .owl-next {
+  .owl-prev,
+  .owl-next {
+    position: absolute;
+    top: calc(50% - $dots-height);
+    width: $button-size;
+    height: $button-size;
+    transform: translateY(-50%);
+    padding: 0;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.1s;
+
+    &:hover {
+      background-color: $button-bg-color-hover;
+    }
+  }
+
+  .owl-prev {
+    left: 0;
+    margin-left: $button-padding;
+
+    span {
       position: absolute;
-      top: calc(50% - $dots-height);
-      width: $button-size;
-      height: $button-size;
-      transform: translateY(-50%);
-      padding: 0;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: background-color 0.1s;
+      left: calc($button-size / 2 - $icon-size / 3);
+    }
+  }
 
-      &:hover {
+  .owl-next {
+    right: 0;
+    margin-right: $button-padding;
+  }
+
+  .owl-dots {
+    .owl-dot {
+      &:hover span,
+      &.active span {
         background-color: $button-bg-color-hover;
-      }
-    }
-
-    .owl-prev {
-      left: 0;
-      margin-left: $button-padding;
-
-      span {
-        position: absolute;
-        left: calc($button-size / 2 - $icon-size / 3);
-      }
-    }
-
-    .owl-next {
-      right: 0;
-      margin-right: $button-padding;
-    }
-
-    .owl-dots {
-      .owl-dot {
-        &:hover span,
-        &.active span {
-          background-color: $button-bg-color-hover;
-        }
       }
     }
   }
