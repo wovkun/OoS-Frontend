@@ -2,7 +2,6 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -159,7 +158,6 @@ import { TranslateCasesPipe } from './pipes/translate-cases.pipe';
     MaterialModule,
     CommonModule,
     ReactiveFormsModule,
-    FlexLayoutModule,
     RouterModule,
     FormsModule,
     NgxSliderModule,
