@@ -126,6 +126,18 @@ export class UserWorkshopService {
     return this.http.delete<void>(`/api/v1/Workshop/Delete/${id}`);
   }
 
+  // public storeDraft(draftData: any): Observable<void> {
+  //   return this.http.post<void>('/api/v1/WorkshopDraftStorage/StoreDraft', draftData);
+  // }
+
+  public restoreDraftData(): Observable<void> {
+    return this.http.get<void>('/api/v1/WorkshopDraftStorage/RestoreDraft');
+  }
+
+  public removeDraftData(): Observable<void> {
+    return this.http.delete<void>('/api/v1/WorkshopDraftStorage/RemoveDraft');
+  }
+
   private createFormData(workshop: Workshop): FormData {
     const formData = new FormData();
     const formNames = ['address', 'dateTimeRanges', 'keywords', 'imageIds', 'workshopDescriptionItems'];

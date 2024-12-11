@@ -64,7 +64,6 @@ export class PersonalCabinetComponent implements OnInit, OnDestroy {
       this.store.dispatch(new GetPendingApplicationsByProviderId(providerId));
     }
   }
-
   public ngOnDestroy(): void {
     this.store.dispatch(new DeleteNavPath());
   }
