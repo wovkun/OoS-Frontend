@@ -134,6 +134,7 @@
       "SUPPORT": "Підтримка",
       "USERS": "Користувачі",
       "MY_WORKSHOPS": "Мої гуртки",
+      "SUBJECTS":"Навчальні предмети",
       "INFORMATION_ABOUT": "Інформація про",
       "FAVORITE": "Улюблене",
       "LAWS_AND_REGULATIONS": "Нормативно-правові акти",
@@ -454,7 +455,13 @@
       "EDUCATIONAL_SHIFT": "Зміна навчання",
       "AGE_COMPOSITION": "Тип групи за віковим складом",
       "COVERAGE": "Покриття",
-      "WORKSHOP_TYPE": "Тип групи"
+      "WORKSHOP_TYPE": "Тип групи",
+      "SUBJECT_NAME": "Назва предмету",
+      "TEACHING_LANGUAGE_SUBJECT_NAME":"Назва предмету мовою викладання",
+      "TEACHING_LANGUAGE":"Мова викладання",
+      "CREATION_DATE": "Дата створення",
+      "LAST_REFERRED":"Дата останнього посилання на навчальний предмет",
+      "USED_IN":"Кількість гуртків у яких використовується"
     },
     "PLACEHOLDERS": {
       "SELECTION_SOCIAL_GROUPS": "Виберіть соціальні групи",
@@ -586,6 +593,7 @@
     "ADD_CHILDREN": "Тут ви можете додати інформацію про дитину, щоб записати її у гурток, секцію чи школу",
     "MAX_CHILDREN_AMOUNT": "Можливо додати не більш, ніж 20 дітей",
     "ADD_WORKSHOP": "Тут ви можете створити гурток, секцію або групу для навчання",
+    "ADD_SUBJECTS": "Тут ви можете створити навчальний предмет",
     "ADD_ACHIEVEMENT_PARTICIPANTS": "Додавання досягнень можливе лише за наявності учасників у гуртку.",
     "PREVIOUSLY_SELECTED_TEACHERS": "Попередньо вибрані тренера/викладачі:",
     "ADD_ACHIEVEMENT_TEACHERS": "Додавання досягнень можливе лише при наявності викладачів/тренерів у гуртку.",
@@ -595,6 +603,7 @@
   "BUTTONS": {
     "ADD_CHILDREN": "Додати дитину",
     "ADD_WORKSHOP": "Додати гурток",
+    "ADD_SUBJECT": "Додати навчальний предмет",
     "APPROVE_APPLICATION": "Прийняти",
     "ACCEPT_TO_COMPETITIVE_SELECTION": "Прийняти до відбору",
     "ENROLL_TO_WORKSHOP": "Зарахувати",
@@ -668,7 +677,8 @@
     "NO_SETTLEMENT": "Такого населеного пункту немає",
     "NO_TERRITORIAL_COMMUNITY": "Такої територіальної громади немає",
     "NO_CHILD_WORKSHOPS": "Гуртків поки немає!",
-    "NO_CHAT_HISTORY": "У чаті ще немає повідомлень"
+    "NO_CHAT_HISTORY": "У чаті ще немає повідомлень",
+    "NO_STUDY_SUBJECTS":"Навчальних предметів поки немає"
   },
   "NOTIFICATIONS": "Сповіщення",
   "APPLICATION_STATUSES": "Статуси заявок",
