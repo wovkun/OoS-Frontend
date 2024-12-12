@@ -1,0 +1,23 @@
+@import 'src/app/shared/styles/list-wrappers.scss';
+@import 'src/app/shared/styles/card-wrapper.scss';
+@import 'src/app/shared/styles/buttons.scss';
+@import 'src/app/shared/styles/tables.scss';
+@import 'src/app/shared/styles/navigation-tabs.scss';
+@import 'src/app/shared/styles/buttons.scss';
+@import 'src/app/shared/styles/search.scss';
+
+table {
+  width: 100%;
+  height: 20px;
+  td,
+  th {
+  }
+
+  a {
+    cursor: pointer;
+    span {
+      margin-left: px;
+      vertical-align: top;
+    }
+  }
+}

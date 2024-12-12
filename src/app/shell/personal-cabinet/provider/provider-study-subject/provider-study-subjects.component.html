@@ -1,0 +1,80 @@
+<div class="add-wrapper">
+  <p class="text">{{ 'BANNERS.ADD_SUBJECTS' | translate }}</p>
+  <a [routerLink]="['/create-subject', ModeConstants.NEW]">
+    <button class="btn" mat-raised-button>{{ 'BUTTONS.ADD_SUBJECT' | translate }}</button>
+  </a>
+</div>
+<div class="table-wrapper">
+  <!-- Subject name column -->
+  <ng-container *ngIf="dataSource.data.length; else isEmptyList">
+    <div [hidden]="!dataSource" *ngIf="isLoaded" class="table-container mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort aria-describedby="subjects-table" appStretchTable>
+        <ng-container matColumnDef="subj-name" sticky>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'FORMS.LABELS.SUBJECT_NAME' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.subjName }}</td>
+        </ng-container>
+
+        <!-- Teaching language subject name column -->
+        <ng-container matColumnDef="teaching-lang-subj-name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'FORMS.LABELS.TEACHING_LANGUAGE_SUBJECT_NAME' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.teachingLangSubjName }}</td>
+        </ng-container>
+
+        <!-- Teaching Language Column-->
+        <ng-container matColumnDef="teaching-lang">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'FORMS.LABELS.TEACHING_LANGUAGE' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.teachingLang }}</td>
+        </ng-container>
+
+        <!-- Date of Creation Column-->
+        <ng-container matColumnDef="creation-date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'FORMS.LABELS.CREATION_DATE' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.creationDate | date: 'shortDate' }}</td>
+        </ng-container>
+
+        <!-- Date when last referred form other parts of the system Column-->
+        <ng-container matColumnDef="last-referred">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'FORMS.LABELS.LAST_REFERRED' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.lastReferred | date: 'shortDate' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="used-in">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'FORMS.LABELS.USED_IN' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element.usedIn }}</td>
+        </ng-container>
+
+        <ng-container class="actions-column" matColumnDef="actions" stickyEnd>
+          <th mat-header-cell *matHeaderCellDef style="width: 10%"></th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-button (click)="onEdit(element)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-button>
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </ng-container>
+  <ng-template #isEmptyList>
+    <div class="table-wrapper">
+      <app-no-result-card [title]="noStudySubjects"></app-no-result-card>
+    </div>
+  </ng-template>
+</div>
