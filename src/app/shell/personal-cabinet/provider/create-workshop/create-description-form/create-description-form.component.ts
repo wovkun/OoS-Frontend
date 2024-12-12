@@ -68,11 +68,11 @@ export class CreateDescriptionFormComponent implements OnInit, OnDestroy {
     return item1.id === item2.id;
   }
 
-  public onRemoveItem(direction: Direction): void {
-    const index = this.tagsControl.value.indexOf(direction);
-    if (index >= 0) {
-      this.tagsControl.value.splice(index, 1);
-    }
+  public onRemoveItem(tag: Tag): void {
+    const currentTags = this.tagsControl.value || [];
+    const updatedTags = currentTags.filter((t) => t.id !== tag.id);
+    this.tagsControl.setValue(updatedTags);
+    this.updateTagIds(updatedTags);
   }
 
   private destroy$: Subject<boolean> = new Subject<boolean>();
@@ -91,12 +91,17 @@ export class CreateDescriptionFormComponent implements OnInit, OnDestroy {
       keyWords: new FormControl(null),
       workshopDescriptionItems: this.SectionItemsFormArray,
       competitiveSelection: new FormControl(false),
-      competitiveSelectionDescription: null
+      competitiveSelectionDescription: null,
+      tagIds: new FormControl([])
     });
   }
 
   public ngOnInit(): void {
     this.onDisabilityOptionCtrlInit();
+
+    this.tagsControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((selectedTags: Tag[]) => {
+      this.updateTagIds(selectedTags || []);
+    });
 
     if (this.workshop) {
       this.activateEditMode();
@@ -105,7 +110,7 @@ export class CreateDescriptionFormComponent implements OnInit, OnDestroy {
     }
 
     this.tagService
-      .getDirections()
+      .getTags()
       .pipe(take(1))
       .subscribe((tags) => {
         this.tags = tags;
@@ -238,6 +243,11 @@ export class CreateDescriptionFormComponent implements OnInit, OnDestroy {
       );
     }
 
+    if (this.workshop?.tagIds?.length) {
+      const selectedTags = this.tags.filter((tag) => this.workshop.tagIds.includes(tag.id));
+      this.tagsControl.setValue(selectedTags);
+    }
+
     this.competitiveSelectionRadioBtn.setValue(this.workshop.competitiveSelection);
   }
 
@@ -287,6 +297,12 @@ export class CreateDescriptionFormComponent implements OnInit, OnDestroy {
     if (!this.DescriptionFormGroup.dirty) {
       this.DescriptionFormGroup.markAsDirty({ onlySelf: true });
     }
+  }
+
+  private updateTagIds(tags: Tag[]): void {
+    const tagIds = tags.map((tag) => tag.id);
+    const stringifiedTagIds = JSON.stringify(tagIds);
+    this.DescriptionFormGroup.get('tagIds')?.setValue(stringifiedTagIds);
   }
 
   private updateKeywordsInputState(): void {

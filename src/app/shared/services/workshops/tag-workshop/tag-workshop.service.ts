@@ -10,7 +10,7 @@ import { Util } from 'shared/utils/utils';
 export class TagService {
   constructor(private http: HttpClient) {}
 
-  getDirections(): Observable<Tag[]> {
+  getTags(): Observable<Tag[]> {
     return this.http.get<Tag[]>('/api/v1/Tag/Get', {
       params: {
         localization: Util.getCurrentLocalization()
