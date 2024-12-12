@@ -6,12 +6,14 @@ import { ProviderApplicationsComponent } from './provider-applications/provider-
 import { ProviderOrgInfoComponent } from './provider-org-info/provider-org-info.component';
 import { ProviderWorkshopsComponent } from './provider-workshops/provider-workshops.component';
 import { NotEmployeeGuard } from './not-employee.guard';
+import { ProviderStudySubjectsComponent } from './provider-study-subject/provider-study-subjects.component';
 
 const routes: Routes = [
   { path: 'info', component: ProviderOrgInfoComponent },
   { path: 'administration', component: EmployeesComponent, canActivate: [NotEmployeeGuard] },
   { path: 'workshops', component: ProviderWorkshopsComponent },
-  { path: 'applications', component: ProviderApplicationsComponent }
+  { path: 'applications', component: ProviderApplicationsComponent },
+  { path: 'study-subjects', component: ProviderStudySubjectsComponent }
 ];
 
 @NgModule({
