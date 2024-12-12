@@ -134,6 +134,7 @@
       "SUPPORT": "Support",
       "USERS": "Users",
       "MY_WORKSHOPS": "My workshops",
+      "SUBJECTS":"Study Subjects",
       "INFORMATION_ABOUT": "Information about",
       "FAVORITE": "Favorite",
       "LAWS_AND_REGULATIONS": "Laws and regulations",
@@ -407,7 +408,13 @@
       "MINISTRY_SUBMISSION": "Ministry of submission",
       "USER_DIRECTIONS": "Directions for user",
       "TERRITORIAL_COMMUNITY": "Territorial community",
-      "SHORT_TITLE": "Short title"
+      "SHORT_TITLE": "Short title",
+      "SUBJECT_NAME": "Subject name",
+      "TEACHING_LANGUAGE_SUBJECT_NAME":"Subject name in the language of instruction",
+      "TEACHING_LANGUAGE":"Language of instruction",
+      "CREATION_DATE": "Creation date",
+      "LAST_REFERRED":"Date of the last reference",
+      "USED_IN":"Times used in workshops"
     },
     "PLACEHOLDERS": {
       "SELECTION_SOCIAL_GROUPS": "Select social groups",
@@ -535,6 +542,7 @@
     "ADD_CHILDREN": "You can add information about the child for further applying to the workshops",
     "MAX_CHILDREN_AMOUNT": "It is possible to add no more than 20 children",
     "ADD_WORKSHOP": "You can add information about the new workshop",
+    "ADD_SUBJECTS": "You can add information about the new study subject",
     "ADD_ACHIEVEMENT_PARTICIPANTS": "Adding achievements is only possible if there are participants in the workshop.",
     "PREVIOUSLY_SELECTED_TEACHERS": "Previously selected teachers/coaches:",
     "ADD_ACHIEVEMENT_TEACHERS": "Adding achievements is only possible if there are teachers/coaches in the workshop.",
@@ -544,6 +552,7 @@
   "BUTTONS": {
     "ADD_CHILDREN": "Add child",
     "ADD_WORKSHOP": "Add workshop",
+    "ADD_SUBJECT": "Add subject",
     "APPROVE_APPLICATION": "Approve",
     "ACCEPT_TO_COMPETITIVE_SELECTION": "Accept to selection",
     "ENROLL_TO_WORKSHOP": "Enroll",
@@ -615,7 +624,9 @@
     "NO_SETTLEMENT": "There is no such settlement",
     "NO_TERRITORIAL_COMMUNITY": "There is no such territorial community",
     "NO_CHILD_WORKSHOPS": "There are no workshops yet",
-    "NO_CHAT_HISTORY": "There are no messages in the chat yet"
+    "NO_CHAT_HISTORY": "There are no messages in the chat yet",
+    "NO_STUDY_SUBJECTS":"There are no study subjects yet"
+    
   },
   "NOTIFICATIONS": "Notifications",
   "APPLICATION_STATUSES": "Application statuses",
