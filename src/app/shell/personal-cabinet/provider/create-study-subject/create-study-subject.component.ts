@@ -15,7 +15,7 @@ import { CodeficatorCategories } from 'shared-enum/codeficator-categories';
 import { NavBarName } from 'shared-enum/enumUA/navigation-bar';
 import { AdminsFormTitlesEdit, AdminsFormTitlesNew } from 'shared-enum/enumUA/tech-admin/admins';
 import { ModalConfirmationType } from 'shared-enum/modal-confirmation';
-import { Role, Subrole } from 'shared-enum/role';
+import { Role } from 'shared-enum/role';
 import { BaseAdmin } from 'shared-models/admin.model';
 import { Codeficator } from 'shared-models/codeficator.model';
 import { Institution } from 'shared-models/institution.model';
@@ -24,7 +24,7 @@ import { CreateAdmin, GetAdminById, UpdateAdmin } from 'shared-store/admin.actio
 import { AdminState } from 'shared-store/admin.state';
 import { GetAllInstitutions, GetCodeficatorById, GetCodeficatorSearch } from 'shared-store/meta-data.actions';
 import { MetaDataState } from 'shared-store/meta-data.state';
-import { AddNavPath } from 'shared-store/navigation.actions';
+import { AddNavPath, PushNavPath } from 'shared-store/navigation.actions';
 import { StudySubjectService } from 'shared/services/study-subjects/study-subjects.service';
 import { RegistrationState } from 'shared-store/registration.state';
 import { Util } from 'shared-utils/utils';
@@ -91,26 +91,12 @@ export class CreateStudySubjectComponent extends CreateFormComponent implements 
   public setEditMode(): void {}
 
   public addNavPath(): void {
-    const userRole = this.store.selectSnapshot<Role>(RegistrationState.role);
-    const subrole = this.store.selectSnapshot<Subrole>(RegistrationState.subrole);
-    const personalCabinetTitle = Util.getPersonalCabinetTitle(userRole, subrole);
-
     this.store.dispatch(
-      new AddNavPath(
-        this.navigationBarService.createNavPaths(
-          {
-            name: personalCabinetTitle,
-            path: '/personal-cabinet/provider/administration',
-            isActive: false,
-            disable: false
-          },
-          {
-            name: NavBarName.CreateSubjects,
-            isActive: false,
-            disable: true
-          }
-        )
-      )
+      new PushNavPath({
+        name: NavBarName.CreateSubjects,
+        isActive: false,
+        disable: true
+      })
     );
   }
 
