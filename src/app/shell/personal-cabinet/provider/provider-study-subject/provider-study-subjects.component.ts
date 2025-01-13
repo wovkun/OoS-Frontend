@@ -6,8 +6,9 @@ import { NavBarName } from 'shared/enum/enumUA/navigation-bar';
 import { PushNavPath } from 'shared/store/navigation.actions';
 import { MatSort } from '@angular/material/sort';
 import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subject, distinctUntilChanged, filter, map, takeUntil } from 'rxjs';
+import { Observable, Subject, distinctUntilChanged, filter, map, takeUntil, BehaviorSubject } from 'rxjs';
 import { Direction } from 'shared/models/category.model';
 import { DefaultFilterState } from 'shared/models/default-filter-state.model';
 import { SetDirections } from 'shared/store/filter.actions';
@@ -15,8 +16,11 @@ import { MetaDataState } from 'shared/store/meta-data.state';
 // eslint-disable-next-line max-len
 import { ProviderState } from 'shared/store/provider.state';
 import { NoResultsTitle } from 'shared/enum/enumUA/no-results';
+import { StudySubjectService } from 'shared/services/study-subjects/study-subjects.service';
 import { Util } from 'shared/utils/utils';
+import { SubjectModel } from 'shared/models/study-subject.model';
 import { ProviderComponent } from '../provider.component';
+import { CreateStudySubjectComponent } from '../create-study-subject/create-study-subject.component';
 
 @Component({
   selector: 'app-provider-study-subjects',
@@ -49,7 +53,8 @@ export class ProviderStudySubjectsComponent extends ProviderComponent implements
     protected store: Store,
     protected matDialog: MatDialog,
     private actions$: Actions,
-    private router: Router
+    private router: Router,
+    private subjectService: StudySubjectService
   ) {
     super(store, matDialog);
   }
@@ -71,97 +76,15 @@ export class ProviderStudySubjectsComponent extends ProviderComponent implements
    * This method should get provider subjects according to the subrole
    */
   public initProviderData(): void {
-    this.dummyData = [
-      // {
-      //   subjName: 'Математика',
-      //   teachingLangSubjName: 'Математика',
-      //   teachingLang: 'Українська',
-      //   creationDate: new Date('2023-09-01'),
-      //   lastReferred: new Date('2024-01-15'),
-      //   usedIn: 1
-      // },
-      // {
-      //   subjName: 'Фізика',
-      //   teachingLangSubjName: 'Physique',
-      //   teachingLang: 'Французька',
-      //   creationDate: new Date('2023-09-03'),
-      //   lastReferred: new Date('2024-02-10'),
-      //   usedIn: 2
-      // },
-      // {
-      //   subjName: 'Хімія',
-      //   teachingLangSubjName: 'Хімія',
-      //   teachingLang: 'Українська',
-      //   creationDate: new Date('2023-09-05'),
-      //   lastReferred: new Date('2024-01-20'),
-      //   usedIn: 3
-      // },
-      // {
-      //   subjName: 'Біологія',
-      //   teachingLangSubjName: 'Biologie',
-      //   teachingLang: 'Німецька',
-      //   creationDate: new Date('2023-09-07'),
-      //   lastReferred: new Date('2024-02-05'),
-      //   usedIn: 2
-      // },
-      // {
-      //   subjName: 'Історія',
-      //   teachingLangSubjName: 'Historia',
-      //   teachingLang: 'Іспанська',
-      //   creationDate: new Date('2023-09-10'),
-      //   lastReferred: new Date('2024-01-25'),
-      //   usedIn: 1
-      // },
-      // {
-      //   subjName: 'Географія',
-      //   teachingLangSubjName: 'Geographie',
-      //   teachingLang: 'Французька',
-      //   creationDate: new Date('2023-09-12'),
-      //   lastReferred: new Date('2024-02-15'),
-      //   usedIn: 1
-      // },
-      // {
-      //   subjName: 'Інформатика',
-      //   teachingLangSubjName: 'Informatik',
-      //   teachingLang: 'Німецька',
-      //   creationDate: new Date('2023-09-15'),
-      //   lastReferred: new Date('2024-01-30'),
-      //   usedIn: 1
-      // },
-      // {
-      //   subjName: 'Література англійська',
-      //   teachingLangSubjName: 'English Literature',
-      //   teachingLang: 'Англійська',
-      //   creationDate: new Date('2023-09-18'),
-      //   lastReferred: new Date('2024-02-20'),
-      //   usedIn: 2
-      // },
-      // {
-      //   subjName: 'Мистецтво',
-      //   teachingLangSubjName: 'Arte',
-      //   teachingLang: 'Іспанська',
-      //   creationDate: new Date('2023-09-20'),
-      //   lastReferred: new Date('2024-01-10'),
-      //   usedIn: 2
-      // },
-      // {
-      //   subjName: 'Економіка',
-      //   teachingLangSubjName: 'Wirtschaft',
-      //   teachingLang: 'Німецька',
-      //   creationDate: new Date('2023-09-22'),
-      //   lastReferred: new Date('2024-02-01'),
-      //   usedIn: 3
-      // }
-    ];
-    this.dataSource = new MatTableDataSource(this.dummyData);
-    console.log('init the data');
-    this.isLoaded = true;
+    this.dataSource = new MatTableDataSource();
+    this.subjectService.getSubjects().subscribe((subjects) => {
+      this.dataSource.data = subjects;
+      this.isLoaded = true;
+    });
   }
 
   /**
    *   this method should load data about subjects
    */
-  private getProvider(): void {
-    console.log('loaded the subjects');
-  }
+  private getProvider(): void {}
 }
