@@ -76,15 +76,21 @@ export class ProviderStudySubjectsComponent extends ProviderComponent implements
    * This method should get provider subjects according to the subrole
    */
   public initProviderData(): void {
-    this.dataSource = new MatTableDataSource();
-    this.subjectService.getSubjects().subscribe((subjects) => {
-      this.dataSource.data = subjects;
-      this.isLoaded = true;
-    });
+    this.subjectService
+      .getSubjects()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((subjects: SubjectModel[]) => {
+        this.dataSource = new MatTableDataSource(subjects);
+        this.isLoaded = true;
+      });
   }
 
   /**
    *   this method should load data about subjects
    */
   private getProvider(): void {}
+
+  public onDelete(subject: SubjectModel): void {
+    this.subjectService.deleteSubject(subject);
+  }
 }

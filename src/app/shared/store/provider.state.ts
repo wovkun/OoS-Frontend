@@ -95,7 +95,8 @@ import {
   UpdateProviderLicenseStatus,
   UpdateProviderStatus,
   UpdateWorkshop,
-  UpdateWorkshopStatus
+  UpdateWorkshopStatus,
+  CreateStudySubject
 } from './provider.actions';
 import { CheckAuth, GetProfile } from './registration.actions';
 
@@ -805,5 +806,19 @@ export class ProviderState {
     return this.applicationService
       .getPendingApplicationsByProviderId(id)
       .pipe(tap((pendingApplications: SearchResponse<Application[]>) => patchState({ pendingApplications })));
+  }
+
+  @Action(CreateStudySubject)
+  CreateStudySubject({ dispatch }: StateContext<ProviderStateModel>): void {
+    dispatch([
+      new ShowMessageBar({
+        message: SnackbarText.createSubject,
+        type: 'success'
+      }),
+      new MarkFormDirty(false)
+    ]);
+    this.router.navigate(['/personal-cabinet/provider/study-subjects'], {
+      queryParams: { status: 'Subjects' }
+    });
   }
 }

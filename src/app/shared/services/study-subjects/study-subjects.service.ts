@@ -15,7 +15,24 @@ import { FilterState } from 'shared/store/filter.state';
   providedIn: 'root'
 })
 export class StudySubjectService {
-  private subjects: any[] = [];
+  private subjects: any[] = [
+    {
+      subjName: 'Біологія',
+      teachingLangSubjName: 'Biology',
+      teachingLang: 'English',
+      creationDate: new Date('2023-09-07'),
+      lastReferred: new Date('2024-02-05'),
+      usedIn: 0
+    },
+    {
+      subjName: 'Хімія',
+      teachingLangSubjName: 'Хімія',
+      teachingLang: 'Українська',
+      creationDate: new Date('2023-09-05'),
+      lastReferred: new Date('2024-01-20'),
+      usedIn: 0
+    }
+  ];
   private subjectsSubject = new BehaviorSubject<any[]>(this.subjects);
 
   constructor(
@@ -29,6 +46,12 @@ export class StudySubjectService {
 
   addSubject(newSubject: SubjectModel): void {
     this.subjects.push(newSubject);
+    this.subjectsSubject.next(this.subjects);
+  }
+
+  deleteSubject(subject: SubjectModel): void {
+    this.subjects = this.subjects.filter((s) => s.subjName !== subject.subjName);
+
     this.subjectsSubject.next(this.subjects);
   }
 }

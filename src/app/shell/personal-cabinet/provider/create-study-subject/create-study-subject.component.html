@@ -37,7 +37,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <app-validation-hint></app-validation-hint>
+      <app-validation-hint [validationFormControl]="studySubjectFormGroup.get('teachingLanguage')"></app-validation-hint>
     </form>
 
     <div class="footer flex flex-row justify-center items-center">

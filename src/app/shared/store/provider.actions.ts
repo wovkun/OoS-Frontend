@@ -400,3 +400,8 @@ export class GetPendingApplicationsByProviderId {
   static readonly type = '[provider] Get Pending Applications By Provider Id';
   constructor(public id: string) {}
 }
+
+export class CreateStudySubject {
+  static readonly type = '[provider] create subject';
+  constructor() {}
+}

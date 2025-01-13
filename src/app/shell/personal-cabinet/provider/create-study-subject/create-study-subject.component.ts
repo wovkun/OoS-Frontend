@@ -31,6 +31,10 @@ import { Util } from 'shared-utils/utils';
 import { AreaAdmin } from 'shared/models/area-admin.model';
 import { RegionAdmin } from 'shared/models/region-admin.model';
 import { AdminFactory } from 'shared/utils/admin.utils';
+import { ShowMessageBar } from 'shared/store/app.actions';
+import { CreateStudySubject } from 'shared/store/provider.actions';
+import { SubjectModel } from 'shared/models/study-subject.model';
+import { SnackbarText } from 'shared/enum/enumUA/message-bar';
 import { CreateFormComponent } from '../../shared-cabinet/create-form/create-form.component';
 
 const defaultValidators: ValidatorFn[] = [
@@ -68,8 +72,8 @@ export class CreateStudySubjectComponent extends CreateFormComponent implements 
 
     this.studySubjectFormGroup = this.formBuilder.group({
       subjectName: new FormControl('', defaultValidators),
-      teachingLanguageSubjectName: new FormControl('', defaultValidators),
-      teachingLanguage: new FormControl('')
+      teachingLanguageSubjectName: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(60)]),
+      teachingLanguage: new FormControl('', Validators.required)
     });
 
     this.subscribeOnDirtyForm(this.studySubjectFormGroup);
@@ -101,12 +105,16 @@ export class CreateStudySubjectComponent extends CreateFormComponent implements 
   }
 
   public onSubmit(): void {
-    if (this.studySubjectFormGroup.valid) {
-      const newSubject = this.studySubjectFormGroup.value;
-      this.subjectService.addSubject(newSubject);
-      this.studySubjectFormGroup.reset();
-      this.router.navigate(['/personal-cabinet/provider/study-subjects']);
-    }
+    const newSubject: SubjectModel = {
+      subjName: this.studySubjectFormGroup.get('subjectName')?.value,
+      teachingLangSubjName: this.studySubjectFormGroup.get('teachingLanguageSubjectName')?.value,
+      teachingLang: this.studySubjectFormGroup.get('teachingLanguage')?.value.title,
+      creationDate: new Date(),
+      lastReferred: new Date(),
+      usedIn: 0
+    };
+    this.subjectService.addSubject(newSubject);
+    this.store.dispatch(new CreateStudySubject());
   }
 
   public onCancel(): void {
