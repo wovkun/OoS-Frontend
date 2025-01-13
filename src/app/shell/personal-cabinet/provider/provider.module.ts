@@ -29,6 +29,7 @@ import { ProviderOrgInfoComponent } from './provider-org-info/provider-org-info.
 import { ProviderRoutingModule } from './provider-routing.module';
 import { ProviderWorkshopsComponent } from './provider-workshops/provider-workshops.component';
 import { ProviderStudySubjectsComponent } from './provider-study-subject/provider-study-subjects.component';
+import { CreateStudySubjectComponent } from './create-study-subject/create-study-subject.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ProviderStudySubjectsComponent } from './provider-study-subject/provide
     ProviderWorkshopsComponent,
     WorkingHoursFormWrapperComponent,
     CreateAddressFormComponent,
-    ProviderStudySubjectsComponent
+    ProviderStudySubjectsComponent,
+    CreateStudySubjectComponent
   ],
   imports: [
     CommonModule,
