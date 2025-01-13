@@ -135,6 +135,7 @@
       "USERS": "Users",
       "MY_WORKSHOPS": "My workshops",
       "SUBJECTS":"Study Subjects",
+      "ADD_SUBJECTS":"Add new study subject",
       "INFORMATION_ABOUT": "Information about",
       "FAVORITE": "Favorite",
       "LAWS_AND_REGULATIONS": "Laws and regulations",
@@ -341,7 +342,8 @@
       "SUBHEADER_TITLE": "Title",
       "PROVIDER_ADMINS_SUBHEADER": "Login data will be sent to the user's email for logging into the system.",
       "ADD_ACHIEVEMENT": "ADD ACHIEVEMENT",
-      "ADD_ADMINS_SUBHEADER": "Login details will be sent to the user's login email. Password is temporary and must be changed at first login"
+      "ADD_ADMINS_SUBHEADER": "Login details will be sent to the user's login email. Password is temporary and must be changed at first login",
+      "ADD_STUDY_SUBJECT": "ADD STUDY SUBJECT"
     },
     "LABELS": {
       "AGE_OF_PARTICIPANTS": "Age of participants",
@@ -432,6 +434,7 @@
       "SEARCH_PROVIDER_EDRPO_MAIL_PHONE": "Search by provider title, provider registration code, email, phone",
       "SEARCH_NAME_EMAIL_CITY_TYPE_CHANGE": "Search by name, phone, email, type of change",
       "SEARCH_BY_DIRECTIONS": "Search by directions",
+      "SEARCH_STUDY_SUBJECT": "Search study subject by name, language",
       "ENTER_DATE_RANGE": "Enter a date range",
       "ALL_FILTERS": "All filters",
       "SELECT_SUBORDINATION": "Select subordination",
@@ -441,7 +444,8 @@
       "SELECT_ACHIEVEMENT": "Select achievement type",
       "SELECT_OWNERSHIP": "Select ownership type",
       "SELECT_INSTITUTION_CATEGORY": "Select provider category",
-      "SELECT_ORGANIZATION_TYPE": "Select institution type"
+      "SELECT_ORGANIZATION_TYPE": "Select institution type",
+      "SELECT_LANGUAGE_OF_INSTRUCTION":"Select language of instruction"
     },
     "UAH_FOR": "UAH for",
     "UAH": "UAH",
